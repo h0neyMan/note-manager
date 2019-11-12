@@ -8,6 +8,7 @@
     "react-scripts": "3.2.0"
   },
   "scripts": {
+    "pretest": "eslint .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -29,5 +30,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "eslint-plugin-react": "^7.16.0"
   }
 }
