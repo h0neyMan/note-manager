@@ -25,3 +25,10 @@ export const fetchDirectoriesSuccess = (payload) => {
         payload: payload,
     };
 };
+
+export const triggerDirectoryFold = (payload) => {
+    return {
+        type: actionTypes.TRIGGER_DIRECTORY_FOLD,
+        payload: payload,
+    };
+};

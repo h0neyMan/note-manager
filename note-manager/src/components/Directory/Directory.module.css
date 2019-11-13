@@ -1,8 +1,14 @@
 .Directory {
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    cursor: pointer;
 }
 
 .Directory .FolderIcon {
     padding: 5px;
+}
+
+.Directory.SelectedDirectory {
+    background-color: #eee;
 }

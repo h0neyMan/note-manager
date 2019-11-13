@@ -10,7 +10,8 @@
 }
 
 .DirectoriesList {
-    width: 200px;
+    width: 300px;
     display: inline-flex;
     flex-direction: column;
+    overflow-x: auto;
 }

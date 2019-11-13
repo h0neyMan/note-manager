@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { faPlus, faTimes, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
+import { directoryShape } from './PropTypes';
 import ManagerActionButton from '../../components/ManagerActionButton/ManagerActionButton';
-import Directory from '../../components/Directory/Directory';
+import DirectoriesList from './DirectoriesList/DirectoriesList';
 import { fetchDirectories } from '../../store/actions';
-import { getDirectories } from '../../store/selectors/directories';
+import { getRootDir } from '../../store/selectors/directories';
 import classes from './NoteManager.module.css';
 
 const NoteManager = props => {
@@ -22,17 +23,21 @@ const NoteManager = props => {
                 <ManagerActionButton icon={faTimes} text={'Remove'} />
             </div>
             <div className={classes.DirectoriesList}>
-                {props.directories.map(directory => (
-                    <Directory key={directory.id} name={directory.name} />
-                ))}
+                <DirectoriesList
+                    directory={props.rootDir} />
             </div>
         </div>
     );
 };
 
+NoteManager.propTypes = {
+    rootDir: directoryShape,
+    fetchDirectories: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = state => {
     return {
-        directories: getDirectories(state),
+        rootDir: getRootDir(state),
     };
 };
 
@@ -40,14 +45,6 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchDirectories: () => dispatch(fetchDirectories()),
     };
-};
-
-NoteManager.propTypes = {
-    directories: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-    })).isRequired,
-    fetchDirectories: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoteManager);

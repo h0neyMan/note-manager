@@ -3,4 +3,5 @@ export {
     fetchDirectoriesStart,
     fetchDirectoriesFail,
     fetchDirectoriesSuccess,
+    triggerDirectoryFold,
 } from './directories';

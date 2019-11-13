@@ -1,13 +1,21 @@
 import { createSelector } from 'reselect';
 
-const allIdsSelector = state => state.directories.allIds;
-const byIdSelector = state => state.directories.byId;
+const getById = state => state.directories.byId;
+const getDirectoriesByParent = state => state.directoriesList.directoriesByParent;
+const getRootDirId = state => state.directoriesList.rootDirId;
+export const getSelectedDirId = state => state.directoriesList.selectedDirectoryId;
 
-export const getDirectories = createSelector(
-    allIdsSelector,
-    byIdSelector,
-    (allIds, byId) => {
-        const directories = allIds.map(id => byId[id]);
-        return directories;
-    },
+export const getChildrenByParentSelector = createSelector(
+    getDirectoriesByParent,
+    getById,
+    (directoriesByParent, byId) => (dirId) =>
+        directoriesByParent[dirId]
+            ? directoriesByParent[dirId].map(dir => ({ ...byId[dir.id], ...dir }))
+            : null,
+);
+
+export const getRootDir = createSelector(
+    getById,
+    getRootDirId,
+    (byId, rootDirId) => byId[rootDirId] || { id: 0, name: '' },
 );
