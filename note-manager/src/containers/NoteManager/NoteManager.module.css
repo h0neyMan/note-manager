@@ -1,0 +1,16 @@
+.NoteManager {
+    display: flex;
+    padding: 10px;
+}
+
+.SidePanel {
+    width: 100px;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.DirectoriesList {
+    width: 200px;
+    display: inline-flex;
+    flex-direction: column;
+}

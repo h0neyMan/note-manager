@@ -1,0 +1,8 @@
+.Directory {
+    display: flex;
+    align-items: center;
+}
+
+.Directory .FolderIcon {
+    padding: 5px;
+}

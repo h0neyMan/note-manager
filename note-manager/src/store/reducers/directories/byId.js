@@ -1,7 +1,7 @@
 import * as actionTypes from '../../actions/actionTypes';
 import { createReducer } from '../../../utils/reducers';
 
-const initialState = [];
+const initialState = {};
 
 const fetchDirectoriesSuccess = (state, action) => {
     return action.payload.byId;
