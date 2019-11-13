@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import directoriesReducder from './reducers/directories';
+import directoriesReducder from './reducers/directories/index';
 import { watchDirectories } from './sagas';
 
 const composeEnhancers =

@@ -1,5 +1,11 @@
 import * as actionTypes from './actionTypes';
 
+export const fetchDirectories = () => {
+    return {
+        type: actionTypes.FETCH_DIRECTORIES,
+    };
+};
+
 export const fetchDirectoriesStart = () => {
     return {
         type: actionTypes.FETCH_DIRECTORIES_START,
@@ -13,9 +19,9 @@ export const fetchDirectoriesFail = (error) => {
     };
 };
 
-export const fetchDirectoriesSuccess = (directories) => {
+export const fetchDirectoriesSuccess = (payload) => {
     return {
         type: actionTypes.FETCH_DIRECTORIES_SUCCESS,
-        directories: directories,
+        payload: payload,
     };
 };

@@ -1,4 +1,5 @@
 export {
+    fetchDirectories,
     fetchDirectoriesStart,
     fetchDirectoriesFail,
     fetchDirectoriesSuccess,
