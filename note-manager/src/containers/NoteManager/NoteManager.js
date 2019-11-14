@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { faPlus, faTimes, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { directoryShape } from './PropTypes';
 import ManagerActionButton from '../../components/ManagerActionButton/ManagerActionButton';
-import DirectoriesList from './DirectoriesList/DirectoriesList';
+import DirectoriesManager from './DirectoriesManager/DirectoriesManager';
 import { fetchDirectories } from '../../store/actions';
-import { getRootDir } from '../../store/selectors/directories';
 import classes from './NoteManager.module.css';
 
 const NoteManager = props => {
@@ -23,22 +21,14 @@ const NoteManager = props => {
                 <ManagerActionButton icon={faTimes} text={'Remove'} />
             </div>
             <div className={classes.DirectoriesList}>
-                <DirectoriesList
-                    directory={props.rootDir} />
+                <DirectoriesManager />
             </div>
         </div>
     );
 };
 
 NoteManager.propTypes = {
-    rootDir: directoryShape,
     fetchDirectories: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => {
-    return {
-        rootDir: getRootDir(state),
-    };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -47,4 +37,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NoteManager);
+export default connect(null, mapDispatchToProps)(NoteManager);

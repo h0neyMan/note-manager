@@ -18,3 +18,13 @@ export function * fetchDirectories() {
         yield put(actions.fetchDirectoriesFail(error));
     }
 }
+
+export function * createDirectory(directory) {
+    try {
+        yield put(actions.createDirectoryStart());
+        const response = yield call([axios, 'post'], '/directories', directory);
+        yield put(actions.createDirectorySuccess(response.data));
+    } catch (error) {
+        yield put(actions.createDirectoryFail(error));
+    }
+}

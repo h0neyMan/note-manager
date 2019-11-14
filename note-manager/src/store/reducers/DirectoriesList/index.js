@@ -1,5 +1,6 @@
 import * as actionTypes from '../../actions/actionTypes';
 import { createReducer } from '../../../utils/reducers';
+import { updateObject, updateArray, toLookup, firstOrDefault } from '../../../utils/operations';
 
 const initialState = {
     directoriesByParent: {},
@@ -7,48 +8,51 @@ const initialState = {
     selectedDirectoryId: null,
 };
 
-const fetchDirectoriesSuccess = (state, action) => {
-    return {
-        directoriesByParent: action.payload.allIds
-            .map(id => action.payload.byId[id])
-            .filter(dir => dir.parentId)
-            .reduce((prevValue, currValue) => {
-                const newValue = { id: currValue.id, folded: true };
+const fetchDirectoriesSuccess = (state, { payload: { allIds, byId }}) => {
+    const directories = allIds.map(id => byId[id]);
+    const rootDirId = firstOrDefault(
+        directories,
+        dir => !dir.parentId,
+        dir => dir.id
+    );
 
-                if (prevValue[currValue.parentId]) {
-                    prevValue[currValue.parentId].push(newValue);
-                } else {
-                    prevValue[currValue.parentId] = [ newValue ];
-                }
-                return prevValue;
-            }, {}),
-        rootDirId: action.payload.allIds
-            .filter(dirId => !action.payload.byId[dirId].parentId)[0],
+    return {
+        directoriesByParent: toLookup(
+            directories.filter(dir => dir.parentId),
+            dir => dir.parentId,
+            dir => ({ id: dir.id, folded: true })
+        ),
+        rootDirId: rootDirId,
+        selectedDirectoryId: rootDirId,
     };
 };
 
-const triggerDirectoryFold = (state, action) => {
-    const directories = state.directoriesByParent[action.payload.parentId];
-    let updatedDirectoriesByParent = state.directoriesByParent;
+const triggerDirectoryFold = (state, { payload: { id, parentId } }) => {
+    const dirsOnSameLevel = state.directoriesByParent[parentId];
 
-    const triggeredDirIndex = directories.findIndex(dir => dir.id === action.payload.id);
-    updatedDirectoriesByParent = {
-        ...state.directoriesByParent,
-        [action.payload.parentId]: [
-            ...directories.slice(0, triggeredDirIndex),
-            { ...directories[triggeredDirIndex], folded: !directories[triggeredDirIndex].folded },
-            ...directories.slice(triggeredDirIndex + 1),
-        ],
-    };
+    const updatedArray = updateArray(dirsOnSameLevel,
+        dir => dir.id === id,
+        dir => ({ folded: !dir.folded }));
 
+    const updatedDirectoriesByParent = updateObject(state.directoriesByParent, {
+        [parentId]: updatedArray,
+    });
+
+    return updateObject(state, {
+        directoriesByParent: updatedDirectoriesByParent,
+        selectedDirectoryId: id,
+    });
+};
+
+const selectDirectory = (state, { payload: { id } }) => {
     return {
         ...state,
-        directoriesByParent: updatedDirectoriesByParent,
-        selectedDirectoryId: action.payload.id,
+        selectedDirectoryId: id,
     };
 };
 
 export default createReducer(initialState, {
     [actionTypes.FETCH_DIRECTORIES_SUCCESS]: fetchDirectoriesSuccess,
     [actionTypes.TRIGGER_DIRECTORY_FOLD]: triggerDirectoryFold,
+    [actionTypes.SELECT_DIRECTORY]: selectDirectory,
 });

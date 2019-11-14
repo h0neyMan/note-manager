@@ -3,6 +3,13 @@
     align-items: center;
     white-space: nowrap;
     cursor: pointer;
+    border: none;
+    background: none;
+    box-sizing: border-box;
+}
+
+button.Directory:focus {
+    outline: 1px solid #aaa;
 }
 
 .Directory .FolderIcon {

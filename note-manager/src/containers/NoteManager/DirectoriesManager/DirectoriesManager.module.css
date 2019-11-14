@@ -1,0 +1,12 @@
+.DirectoriesManager {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    padding: 2px;
+    padding-bottom: 20px;
+}
+
+.DirectoriesListActive {
+    border: 1px solid #aaa;
+    outline: 0;
+}
