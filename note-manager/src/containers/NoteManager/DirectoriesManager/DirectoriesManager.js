@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 
 import classes from './DirectoriesManager.module.css';
 import { getChildrenByParentSelector, getSelectedDirId, getRootDir } from '../../../store/selectors/directories';
-import { triggerDirectoryFold, selectDirectory } from '../../../store/actions';
+import {
+    triggerDirectoryFold,
+    selectDirectory,
+    createDirectory,
+    triggerCreatePreviewOff } from '../../../store/actions';
 import { directoryShape } from '../PropTypes';
 import DirectoriesList from '../../../components/DirectoriesList/DirectoriesList';
 
@@ -20,7 +24,9 @@ const DirectoriesManager = props => {
                 directory={props.rootDir}
                 selectedDirId={props.selectedDirId}
                 childrenByParentSelector={props.childrenByParentSelector}
-                triggerDirectoryFold={props.triggerDirectoryFold} />
+                triggerDirectoryFold={props.triggerDirectoryFold}
+                onCreateDirectory={props.onCreateDirectory}
+                triggerCreatePreviewOff={props.triggerCreatePreviewOff} />
         </div>
     );
 };
@@ -31,6 +37,8 @@ DirectoriesManager.propTypes = {
     childrenByParentSelector: PropTypes.func.isRequired,
     triggerDirectoryFold: PropTypes.func.isRequired,
     selectDirectory: PropTypes.func.isRequired,
+    onCreateDirectory: PropTypes.func.isRequired,
+    triggerCreatePreviewOff: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -45,6 +53,8 @@ const mapDispatchToProps = dispatch => {
     return {
         triggerDirectoryFold: (directory) => dispatch(triggerDirectoryFold(directory)),
         selectDirectory: (directory) => dispatch(selectDirectory(directory)),
+        onCreateDirectory: (directory) => dispatch(createDirectory(directory)),
+        triggerCreatePreviewOff: (directory) => dispatch(triggerCreatePreviewOff(directory)),
     };
 };
 

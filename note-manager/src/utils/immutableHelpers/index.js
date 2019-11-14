@@ -14,6 +14,13 @@ export const updateArray = (array, selector, newPropsProvider) => {
     ];
 };
 
+export const addItemToArray = (array, newItem) => {
+    if (array && array.length >= 0) {
+        return [ ...array, newItem ];
+    }
+    return [ newItem ];
+};
+
 export const toLookup = (array, keySelector, valueSelector) => {
     return array.reduce((prevValue, currValue) => {
         const newValue = valueSelector(currValue);

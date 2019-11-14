@@ -26,9 +26,10 @@ export const fetchDirectoriesSuccess = (payload) => {
     };
 };
 
-export const createDirectory = () => {
+export const createDirectory = (directory) => {
     return {
         type: actionTypes.CREATE_DIRECTORY,
+        payload: directory,
     };
 };
 
@@ -62,6 +63,20 @@ export const triggerDirectoryFold = (payload) => {
 export const selectDirectory = (payload) => {
     return {
         type: actionTypes.SELECT_DIRECTORY,
+        payload: payload,
+    };
+};
+
+export const previewCreateDirectory = (payload) => {
+    return {
+        type: actionTypes.PREVIEW_CREATE_DIRECTORY,
+        payload: payload,
+    };
+};
+
+export const triggerCreatePreviewOff = (payload) => {
+    return {
+        type: actionTypes.TRIGGER_CREATE_PREVIEW_OFF,
         payload: payload,
     };
 };

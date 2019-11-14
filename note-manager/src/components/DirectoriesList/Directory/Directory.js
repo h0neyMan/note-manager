@@ -16,14 +16,15 @@ const Directory = props => {
     const icon = props.folded ? faFolder : faFolderOpen;
 
     return (
-        <button
+        <div
             className={classNames.join(' ')}
             style={{ marginLeft: `${margin}px`}}
             onClick={props.onClick}
+            tabIndex={0}
             onFocus={e => e.stopPropagation()}>
             <FontAwesomeIcon icon={icon} className={classes.FolderIcon} size={'lg'} />
             {props.name}
-        </button>
+        </div>
     );
 };
 

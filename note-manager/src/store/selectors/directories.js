@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect';
 
 const getById = state => state.directories.byId;
-const getDirectoriesByParent = state => state.directoriesList.directoriesByParent;
-const getRootDirId = state => state.directoriesList.rootDirId;
-export const getSelectedDirId = state => state.directoriesList.selectedDirectoryId;
+const getDirectoriesByParent = state => state.directoriesManager.directoriesByParent;
+const getRootDirId = state => state.directoriesManager.rootDirId;
+const getRootDirIsEditView = state => state.directoriesManager.rootDirIsEditView;
+export const getSelectedDirId = state => state.directoriesManager.selectedDirectoryId;
 
 export const getChildrenByParentSelector = createSelector(
     getDirectoriesByParent,
@@ -17,5 +18,9 @@ export const getChildrenByParentSelector = createSelector(
 export const getRootDir = createSelector(
     getById,
     getRootDirId,
-    (byId, rootDirId) => byId[rootDirId] || { id: 0, name: '' },
+    getRootDirIsEditView,
+    (byId, rootDirId, rootDirIsEditView) => {
+        const rootDir = byId[rootDirId] ? byId[rootDirId] : { id: 0, name: '' };
+        return { ...rootDir, isEditView: rootDirIsEditView };
+    },
 );

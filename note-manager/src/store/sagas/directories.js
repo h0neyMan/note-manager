@@ -19,11 +19,19 @@ export function * fetchDirectories() {
     }
 }
 
-export function * createDirectory(directory) {
+export function * createDirectory(action) {
     try {
         yield put(actions.createDirectoryStart());
-        const response = yield call([axios, 'post'], '/directories', directory);
+        const data = {
+            name: action.payload.name,
+            parentId: action.payload.parentId,
+        };
+        const response = yield call([axios, 'post'], '/directories', data);
         yield put(actions.createDirectorySuccess(response.data));
+        yield put(actions.triggerCreatePreviewOff({
+            id: action.payload.parentId,
+            parentId: action.payload.parentParentId,
+        }));
     } catch (error) {
         yield put(actions.createDirectoryFail(error));
     }

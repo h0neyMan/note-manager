@@ -9,4 +9,6 @@ export {
     createDirectorySuccess,
     triggerDirectoryFold,
     selectDirectory,
+    previewCreateDirectory,
+    triggerCreatePreviewOff,
 } from './directories';
