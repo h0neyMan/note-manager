@@ -14,6 +14,10 @@ export const updateArray = (array, selector, newPropsProvider) => {
     ];
 };
 
+export const deleteItemsFromArray = (array, selector) => {
+    return array.filter(item => !selector(item));
+};
+
 export const addItemToArray = (array, newItem) => {
     if (array && array.length >= 0) {
         return [ ...array, newItem ];
@@ -40,4 +44,13 @@ export const firstOrDefault = (array, filter, selector = x => x) => {
     return filteredValues.length > 0
         ? selector(filteredValues[0])
         : null;
+};
+
+export const removeKeysFromObject = (obj, keys) => {
+    return Object.keys(obj).reduce((result, currValue) => {
+        if (!keys.includes(+currValue)) {
+            result[currValue] = obj[currValue];
+        }
+        return result;
+    }, {});
 };

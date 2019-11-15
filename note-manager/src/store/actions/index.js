@@ -17,4 +17,10 @@ export {
     editDirectoryStart,
     editDirectoryFail,
     editDirectorySuccess,
+    deleteDirectoryConfirm,
+    deleteDirectoryCancel,
+    deleteDirectory,
+    deleteDirectoryStart,
+    deleteDirectoryFail,
+    deleteDirectorySuccess,
 } from './directories';

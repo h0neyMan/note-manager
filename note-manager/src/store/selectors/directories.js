@@ -1,10 +1,47 @@
 import { createSelector } from 'reselect';
 
 const getById = state => state.directories.byId;
+const getAllIds = state => state.directories.allIds;
 const getDirectoriesByParent = state => state.directoriesManager.directoriesByParent;
 const getRootDirId = state => state.directoriesManager.rootDirId;
 const getRootDirIsCreatingSubfolder = state => state.directoriesManager.rootDirIsCreatingSubfolder;
+export const getIsDeleting = state => state.directoriesManager.isDeleting;
 export const getSelectedDirId = state => state.directoriesManager.selectedDirectoryId;
+
+export const getIsEditAndDeleteEnabled = createSelector(
+    getSelectedDirId,
+    getRootDirId,
+    (selectedDirId, rootDirId) => selectedDirId !== rootDirId,
+);
+
+export const getSelectedDir = createSelector(
+    getById,
+    getSelectedDirId,
+    (byId, selectedDirId) => {
+        return byId[selectedDirId]
+            ? { ...byId[selectedDirId] }
+            : { id: 0, name: '' };
+    },
+);
+
+export const getDirectoryIdsAffectedByDelete = createSelector(
+    getById,
+    getAllIds,
+    getSelectedDirId,
+    (byId, allIds, selectedDirId) => {
+        const getDirectoriesToDelete = (directories, parentId) => {
+            let toDelete = [ parentId ];
+            for (const dir of directories) {
+                if (dir.parentId === parentId) {
+                    toDelete = toDelete.concat(getDirectoriesToDelete(directories, dir.id));
+                }
+            }
+            return toDelete;
+        };
+
+        return getDirectoriesToDelete(allIds.map(dirId => byId[dirId]), selectedDirId);
+    },
+);
 
 export const getChildrenByParentSelector = createSelector(
     getDirectoriesByParent,

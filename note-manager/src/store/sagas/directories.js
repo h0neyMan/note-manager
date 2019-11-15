@@ -1,8 +1,9 @@
-import { put, call } from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 
 import * as actions from '../actions';
 import normalize from '../normalize/directories';
 import axios from '../../axios';
+import { getDirectoryIdsAffectedByDelete } from '../selectors/directories';
 
 export function * fetchDirectories() {
     try {
@@ -37,21 +38,26 @@ export function * createDirectory(action) {
     }
 }
 
-export function * editDirectory(action) {
+export function * editDirectory({ payload: { id, name, parentId }}) {
     try {
         yield put(actions.editDirectoryStart());
-        const data = {
-            id: action.payload.id,
-            name: action.payload.name,
-            parentId: action.payload.parentId,
-        };
-        const response = yield call([axios, 'put'], `/directories/${action.payload.id}`, data);
+        const data = { id, name, parentId };
+        const response = yield call([axios, 'put'], `/directories/${id}`, data);
         yield put(actions.editDirectorySuccess(response.data));
-        yield put(actions.triggerEditPreviewOff({
-            id: action.payload.id,
-            parentId: action.payload.parentId,
-        }));
+        yield put(actions.triggerEditPreviewOff({ id, parentId }));
     } catch (error) {
         yield put(actions.createDirectoryFail(error));
+    }
+}
+
+export function * deleteDirectory({ payload: { id, parentId }}) {
+    try {
+        yield put(actions.deleteDirectoryStart());
+        yield call([axios, 'delete'], `/directories/${id}`);
+        const directoriesToDelete = yield select(getDirectoryIdsAffectedByDelete);
+        yield put(actions.deleteDirectorySuccess({ id, parentId, directoriesToDelete }));
+        yield put(actions.deleteDirectoryCancel({ id, parentId }));
+    } catch (error) {
+        yield put(actions.deleteDirectoryFail(error));
     }
 }

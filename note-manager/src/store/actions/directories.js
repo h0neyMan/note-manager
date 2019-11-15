@@ -44,3 +44,17 @@ export const editDirectorySuccess = createPayloadActionCreator(actionTypes.EDIT_
 export const triggerDirectoryFold = createPayloadActionCreator(actionTypes.TRIGGER_DIRECTORY_FOLD);
 
 export const selectDirectory = createPayloadActionCreator(actionTypes.SELECT_DIRECTORY);
+
+export const deleteDirectoryConfirm = createPayloadActionCreator(actionTypes.DELETE_DIRECTORY_CONFIRM);
+
+export const deleteDirectoryCancel = createPayloadActionCreator(actionTypes.DELETE_DIRECTORY_CANCEL);
+
+export const deleteDirectory = createPayloadActionCreator(actionTypes.DELETE_DIRECTORY);
+
+export const deleteDirectoryStart = () => ({
+    type: actionTypes.DELETE_DIRECTORY_START,
+});
+
+export const deleteDirectoryFail = createErrorActionCreator(actionTypes.DELETE_DIRECTORY_FAIL);
+
+export const deleteDirectorySuccess = createPayloadActionCreator(actionTypes.DELETE_DIRECTORY_SUCCESS);

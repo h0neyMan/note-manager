@@ -5,7 +5,9 @@ import {
     updateArray,
     toLookup,
     firstOrDefault,
-    addItemToArray } from '../../../utils/immutableHelpers';
+    addItemToArray,
+    deleteItemsFromArray,
+    removeKeysFromObject } from '../../../utils/immutableHelpers';
 
 const initialState = {
     directoriesByParent: {},
@@ -13,6 +15,7 @@ const initialState = {
     rootDirIsCreatingSubfolder: false,
     selectedDirectoryId: null,
     selectedDirectoryParentId: null,
+    isDeleting: false,
 };
 
 const updateDirectoriesByParent = (state, id, parentId, newPropertiesProvider) => {
@@ -118,6 +121,34 @@ const triggerEditPreviewOff = (state, { payload: { id, parentId } }) => {
         id, parentId, { isEditing: false });
 };
 
+const deleteDirectoryConfirm = (state, action) => {
+    return updateObject(state, {
+        isDeleting: true,
+    });
+};
+
+const deleteDirectoryCancel = (state, action) => {
+    return updateObject(state, {
+        isDeleting: false,
+    });
+};
+
+const deleteDirectorySuccess = (state, { payload: { id, parentId, directoriesToDelete }}) => {
+    const dirsOnSameLevel = state.directoriesByParent[parentId];
+
+    let updatedDirectoriesByParent = removeKeysFromObject(state.directoriesByParent, directoriesToDelete);
+
+    updatedDirectoriesByParent = updateObject(updatedDirectoriesByParent, {
+        [parentId]: deleteItemsFromArray(dirsOnSameLevel, dir => dir.id === id),
+    });
+
+    return updateObject(state, {
+        directoriesByParent: updatedDirectoriesByParent,
+        selectedDirectoryId: state.rootDirId,
+        selectedDirectoryParentId: null,
+    });
+};
+
 export default createReducer(initialState, {
     [actionTypes.FETCH_DIRECTORIES_SUCCESS]: fetchDirectoriesSuccess,
     [actionTypes.TRIGGER_DIRECTORY_FOLD]: triggerDirectoryFold,
@@ -127,4 +158,7 @@ export default createReducer(initialState, {
     [actionTypes.CREATE_DIRECTORY_SUCCESS]: createDirectorySuccess,
     [actionTypes.EDIT_DIRECTORY_PREVIEW]: editDirectoryPreview,
     [actionTypes.TRIGGER_EDIT_PREVIEW_OFF]: triggerEditPreviewOff,
+    [actionTypes.DELETE_DIRECTORY_CONFIRM]: deleteDirectoryConfirm,
+    [actionTypes.DELETE_DIRECTORY_CANCEL]: deleteDirectoryCancel,
+    [actionTypes.DELETE_DIRECTORY_SUCCESS]: deleteDirectorySuccess,
 });
