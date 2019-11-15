@@ -13,6 +13,6 @@
     width: 400px;
     display: inline-flex;
     overflow-x: auto;
-    box-shadow: 3px 2px #aaa;
+    box-shadow: 3px 2px 2px #aaa;
     border: 1px solid #aaa;
 }

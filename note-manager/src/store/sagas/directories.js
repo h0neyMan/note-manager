@@ -36,3 +36,22 @@ export function * createDirectory(action) {
         yield put(actions.createDirectoryFail(error));
     }
 }
+
+export function * editDirectory(action) {
+    try {
+        yield put(actions.editDirectoryStart());
+        const data = {
+            id: action.payload.id,
+            name: action.payload.name,
+            parentId: action.payload.parentId,
+        };
+        const response = yield call([axios, 'put'], `/directories/${action.payload.id}`, data);
+        yield put(actions.editDirectorySuccess(response.data));
+        yield put(actions.triggerEditPreviewOff({
+            id: action.payload.id,
+            parentId: action.payload.parentId,
+        }));
+    } catch (error) {
+        yield put(actions.createDirectoryFail(error));
+    }
+}

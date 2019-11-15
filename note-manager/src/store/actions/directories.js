@@ -1,82 +1,46 @@
 import * as actionTypes from './actionTypes';
+import { createPayloadActionCreator, createErrorActionCreator } from '../../utils/actions';
 
-export const fetchDirectories = () => {
-    return {
-        type: actionTypes.FETCH_DIRECTORIES,
-    };
-};
+export const fetchDirectories = () => ({
+    type: actionTypes.FETCH_DIRECTORIES,
+});
 
-export const fetchDirectoriesStart = () => {
-    return {
-        type: actionTypes.FETCH_DIRECTORIES_START,
-    };
-};
+export const fetchDirectoriesStart = () => ({
+    type: actionTypes.FETCH_DIRECTORIES_START,
+});
 
-export const fetchDirectoriesFail = (error) => {
-    return {
-        type: actionTypes.FETCH_DIRECTORIES_FAIL,
-        error: error,
-    };
-};
+export const fetchDirectoriesFail = createErrorActionCreator(actionTypes.FETCH_DIRECTORIES_FAIL);
 
-export const fetchDirectoriesSuccess = (payload) => {
-    return {
-        type: actionTypes.FETCH_DIRECTORIES_SUCCESS,
-        payload: payload,
-    };
-};
+export const fetchDirectoriesSuccess = createPayloadActionCreator(actionTypes.FETCH_DIRECTORIES_SUCCESS);
 
-export const createDirectory = (directory) => {
-    return {
-        type: actionTypes.CREATE_DIRECTORY,
-        payload: directory,
-    };
-};
+export const createDirectoryPreview = createPayloadActionCreator(actionTypes.CREATE_DIRECTORY_PREVIEW);
 
-export const createDirectoryStart = () => {
-    return {
-        type: actionTypes.CREATE_DIRECTORY_START,
-    };
-};
+export const triggerCreatePreviewOff = createPayloadActionCreator(actionTypes.TRIGGER_CREATE_PREVIEW_OFF);
 
-export const createDirectoryFail = (error) => {
-    return {
-        type: actionTypes.CREATE_DIRECTORY_FAIL,
-        error: error,
-    };
-};
+export const createDirectory = createPayloadActionCreator(actionTypes.CREATE_DIRECTORY);
 
-export const createDirectorySuccess = (payload) => {
-    return {
-        type: actionTypes.CREATE_DIRECTORY_SUCCESS,
-        payload: payload,
-    };
-};
+export const createDirectoryStart = () => ({
+    type: actionTypes.CREATE_DIRECTORY_START,
+});
 
-export const triggerDirectoryFold = (payload) => {
-    return {
-        type: actionTypes.TRIGGER_DIRECTORY_FOLD,
-        payload: payload,
-    };
-};
+export const createDirectoryFail = createErrorActionCreator(actionTypes.CREATE_DIRECTORY_FAIL);
 
-export const selectDirectory = (payload) => {
-    return {
-        type: actionTypes.SELECT_DIRECTORY,
-        payload: payload,
-    };
-};
+export const createDirectorySuccess = createPayloadActionCreator(actionTypes.CREATE_DIRECTORY_SUCCESS);
 
-export const previewCreateDirectory = (payload) => {
-    return {
-        type: actionTypes.PREVIEW_CREATE_DIRECTORY,
-        payload: payload,
-    };
-};
+export const editDirectoryPreview = createPayloadActionCreator(actionTypes.EDIT_DIRECTORY_PREVIEW);
 
-export const triggerCreatePreviewOff = (payload) => {
-    return {
-        type: actionTypes.TRIGGER_CREATE_PREVIEW_OFF,
-        payload: payload,
-    };
-};
+export const triggerEditPreviewOff = createPayloadActionCreator(actionTypes.TRIGGER_EDIT_PREVIEW_OFF);
+
+export const editDirectory = createPayloadActionCreator(actionTypes.EDIT_DIRECTORY);
+
+export const editDirectoryStart = () => ({
+    type: actionTypes.EDIT_DIRECTORY_START,
+});
+
+export const editDirectoryFail = createErrorActionCreator(actionTypes.EDIT_DIRECTORY_FAIL);
+
+export const editDirectorySuccess = createPayloadActionCreator(actionTypes.EDIT_DIRECTORY_SUCCESS);
+
+export const triggerDirectoryFold = createPayloadActionCreator(actionTypes.TRIGGER_DIRECTORY_FOLD);
+
+export const selectDirectory = createPayloadActionCreator(actionTypes.SELECT_DIRECTORY);

@@ -10,12 +10,12 @@ import {
 const initialState = {
     directoriesByParent: {},
     rootDirId: null,
-    rootDirIsEditView: false,
+    rootDirIsCreatingSubfolder: false,
     selectedDirectoryId: null,
     selectedDirectoryParentId: null,
 };
 
-const upateDirectoriesByParent = (state, id, parentId, newPropertiesProvider) => {
+const updateDirectoriesByParent = (state, id, parentId, newPropertiesProvider) => {
     const dirsOnSameLevel = state.directoriesByParent[parentId];
 
     const updatedArray = updateArray(dirsOnSameLevel,
@@ -29,19 +29,20 @@ const upateDirectoriesByParent = (state, id, parentId, newPropertiesProvider) =>
     return updatedDirectoriesByParent;
 };
 
-const setIsEditView = (state, id, parentId, newProperties) => {
-    if (state.selectedDirectoryId === state.rootDirId) {
+const updateDirectoriesByParentState = (state, id, parentId, newProperties) => {
+    return updateObject(state, {
+        directoriesByParent: updateDirectoriesByParent(state, id, parentId, () => newProperties),
+    });
+};
+
+const setIsCreatingSubfolder = (state, id, parentId, newProperties) => {
+    if (id === state.rootDirId) {
         return updateObject(state, {
-            rootDirIsEditView: newProperties.isEditView,
+            rootDirIsCreatingSubfolder: newProperties.isCreatingSubfolder,
         });
     }
 
-    const updatedDirectoriesByParent = upateDirectoriesByParent(
-        state, id, parentId, () => newProperties);
-
-    return updateObject(state, {
-        directoriesByParent: updatedDirectoriesByParent,
-    });
+    return updateDirectoriesByParentState(state, id, parentId, newProperties);
 };
 
 const fetchDirectoriesSuccess = (state, { payload: { allIds, byId }}) => {
@@ -63,6 +64,18 @@ const fetchDirectoriesSuccess = (state, { payload: { allIds, byId }}) => {
     });
 };
 
+const createDirectoryPreview = (state, action) => {
+    return setIsCreatingSubfolder(state,
+        state.selectedDirectoryId,
+        state.selectedDirectoryParentId,
+        { folded: false, isCreatingSubfolder: true });
+};
+
+const triggerCreatePreviewOff = (state, { payload: { id, parentId } }) => {
+    return setIsCreatingSubfolder(state,
+        id, parentId, { isCreatingSubfolder: false });
+};
+
 const createDirectorySuccess = (state, { payload: { id, parentId }}) => {
     const updatedArray = addItemToArray(
         state.directoriesByParent[parentId],
@@ -76,8 +89,8 @@ const createDirectorySuccess = (state, { payload: { id, parentId }}) => {
 };
 
 const triggerDirectoryFold = (state, { payload: { id, parentId } }) => {
-    const updatedDirectoriesByParent = upateDirectoriesByParent(
-        state, id, parentId, dir => ({ folded: !dir.folded, isEditView: false }));
+    const updatedDirectoriesByParent = updateDirectoriesByParent(
+        state, id, parentId, dir => ({ folded: !dir.folded, isCreatingSubfolder: false }));
 
     return updateObject(state, {
         directoriesByParent: updatedDirectoriesByParent,
@@ -93,23 +106,25 @@ const selectDirectory = (state, { payload: { id } }) => {
     });
 };
 
-const previewCreateDirectory = (state, action) => {
-    return setIsEditView(state,
+const editDirectoryPreview = (state, action) => {
+    return updateDirectoriesByParentState(state,
         state.selectedDirectoryId,
         state.selectedDirectoryParentId,
-        { folded: false, isEditView: true });
+        { isEditing: true });
 };
 
-const triggerCreatePreviewOff = (state, { payload: { id, parentId } }) => {
-    return setIsEditView(state,
-        id, parentId, { isEditView: false });
+const triggerEditPreviewOff = (state, { payload: { id, parentId } }) => {
+    return updateDirectoriesByParentState(state,
+        id, parentId, { isEditing: false });
 };
 
 export default createReducer(initialState, {
     [actionTypes.FETCH_DIRECTORIES_SUCCESS]: fetchDirectoriesSuccess,
     [actionTypes.TRIGGER_DIRECTORY_FOLD]: triggerDirectoryFold,
     [actionTypes.SELECT_DIRECTORY]: selectDirectory,
-    [actionTypes.PREVIEW_CREATE_DIRECTORY]: previewCreateDirectory,
-    [actionTypes.CREATE_DIRECTORY_SUCCESS]: createDirectorySuccess,
+    [actionTypes.CREATE_DIRECTORY_PREVIEW]: createDirectoryPreview,
     [actionTypes.TRIGGER_CREATE_PREVIEW_OFF]: triggerCreatePreviewOff,
+    [actionTypes.CREATE_DIRECTORY_SUCCESS]: createDirectorySuccess,
+    [actionTypes.EDIT_DIRECTORY_PREVIEW]: editDirectoryPreview,
+    [actionTypes.TRIGGER_EDIT_PREVIEW_OFF]: triggerEditPreviewOff,
 });

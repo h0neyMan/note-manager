@@ -5,7 +5,7 @@ import { faPlus, faTimes, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 import ManagerActionButton from '../../components/ManagerActionButton/ManagerActionButton';
 import DirectoriesManager from './DirectoriesManager/DirectoriesManager';
-import { fetchDirectories, previewCreateDirectory } from '../../store/actions';
+import { fetchDirectories, createDirectoryPreview, editDirectoryPreview } from '../../store/actions';
 import classes from './NoteManager.module.css';
 
 const NoteManager = props => {
@@ -16,9 +16,9 @@ const NoteManager = props => {
     return (
         <div className={classes.NoteManager}>
             <div className={classes.SidePanel}>
-                <ManagerActionButton clicked={props.previewCreateDirectory} icon={faPlus} text={'Add'} />
-                <ManagerActionButton clicked={props.previewCreateDirectory} icon={faPencilAlt} text={'Add'} />
-                <ManagerActionButton clicked={props.previewCreateDirectory} icon={faTimes} text={'Remove'} />
+                <ManagerActionButton clicked={props.createDirectoryPreview} icon={faPlus} text={'Add'} />
+                <ManagerActionButton clicked={props.editDirectoryPreview} icon={faPencilAlt} text={'Edit'} />
+                <ManagerActionButton clicked={props.createDirectoryPreview} icon={faTimes} text={'Remove'} />
             </div>
             <div className={classes.DirectoriesList}>
                 <DirectoriesManager />
@@ -29,13 +29,15 @@ const NoteManager = props => {
 
 NoteManager.propTypes = {
     fetchDirectories: PropTypes.func.isRequired,
-    previewCreateDirectory: PropTypes.func.isRequired,
+    createDirectoryPreview: PropTypes.func.isRequired,
+    editDirectoryPreview: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchDirectories: () => dispatch(fetchDirectories()),
-        previewCreateDirectory: () => dispatch(previewCreateDirectory()),
+        createDirectoryPreview: () => dispatch(createDirectoryPreview()),
+        editDirectoryPreview: () => dispatch(editDirectoryPreview()),
     };
 };
 

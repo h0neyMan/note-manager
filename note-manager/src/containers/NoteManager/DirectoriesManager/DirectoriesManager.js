@@ -8,7 +8,9 @@ import {
     triggerDirectoryFold,
     selectDirectory,
     createDirectory,
-    triggerCreatePreviewOff } from '../../../store/actions';
+    triggerCreatePreviewOff,
+    editDirectory,
+    triggerEditPreviewOff } from '../../../store/actions';
 import { directoryShape } from '../PropTypes';
 import DirectoriesList from '../../../components/DirectoriesList/DirectoriesList';
 
@@ -26,7 +28,9 @@ const DirectoriesManager = props => {
                 childrenByParentSelector={props.childrenByParentSelector}
                 triggerDirectoryFold={props.triggerDirectoryFold}
                 onCreateDirectory={props.onCreateDirectory}
-                triggerCreatePreviewOff={props.triggerCreatePreviewOff} />
+                triggerCreatePreviewOff={props.triggerCreatePreviewOff}
+                onEditDirectory={props.onEditDirectory}
+                triggerEditPreviewOff={props.triggerEditPreviewOff} />
         </div>
     );
 };
@@ -39,6 +43,8 @@ DirectoriesManager.propTypes = {
     selectDirectory: PropTypes.func.isRequired,
     onCreateDirectory: PropTypes.func.isRequired,
     triggerCreatePreviewOff: PropTypes.func.isRequired,
+    onEditDirectory: PropTypes.func.isRequired,
+    triggerEditPreviewOff: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -55,6 +61,8 @@ const mapDispatchToProps = dispatch => {
         selectDirectory: (directory) => dispatch(selectDirectory(directory)),
         onCreateDirectory: (directory) => dispatch(createDirectory(directory)),
         triggerCreatePreviewOff: (directory) => dispatch(triggerCreatePreviewOff(directory)),
+        onEditDirectory: (directory) => dispatch(editDirectory(directory)),
+        triggerEditPreviewOff: (directory) => dispatch(triggerEditPreviewOff(directory)),
     };
 };
 

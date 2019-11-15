@@ -7,7 +7,7 @@ const fetchDirectoriesSuccess = (state, action) => {
     return action.payload.byId;
 };
 
-const createDirectorySuccess = (state, action) => {
+const updateDirectorySuccess = (state, action) => {
     return {
         ...state,
         [action.payload.id]: action.payload,
@@ -16,7 +16,8 @@ const createDirectorySuccess = (state, action) => {
 
 const reducer = createReducer(initialState, {
     [actionTypes.FETCH_DIRECTORIES_SUCCESS]: fetchDirectoriesSuccess,
-    [actionTypes.CREATE_DIRECTORY_SUCCESS]: createDirectorySuccess,
+    [actionTypes.CREATE_DIRECTORY_SUCCESS]: updateDirectorySuccess,
+    [actionTypes.EDIT_DIRECTORY_SUCCESS]: updateDirectorySuccess,
 });
 
 export default reducer;

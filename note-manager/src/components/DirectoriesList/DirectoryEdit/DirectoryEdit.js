@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolder } from '@fortawesome/free-solid-svg-icons';
+import { faFolder, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 
-import classes from './DirectoryPreview.module.css';
+import classes from './DirectoryEdit.module.css';
 
-const DirectoryPreview = props => {
-    const [ name, setName ] = useState('');
+const DirectoryEdit = props => {
+    const [ name, setName ] = useState(props.name);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        props.onCreateDirectory(name);
+        props.onEditDirectory(name);
     };
+
+    let classNames = [ classes.Directory ];
+    if (props.isSelected) {
+        classNames.push(classes.SelectedDirectory);
+    }
+
+    const icon = props.folded ? faFolder : faFolderOpen;
 
     const margin = props.tab * 20;
 
     return (
         <div
-            className={classes.Directory}
+            className={classNames.join(' ')}
             style={{ marginLeft: `${margin}px`}}>
-            <FontAwesomeIcon icon={faFolder} className={classes.FolderIcon} size={'lg'} />
+            <FontAwesomeIcon icon={icon} className={classes.FolderIcon} size={'lg'} />
             <form
                 onSubmit={submitHandler}
                 onFocus={e => e.stopPropagation()}>
@@ -28,17 +35,20 @@ const DirectoryPreview = props => {
                     type="text"
                     value={name}
                     onChange={e => setName(e.target.value)}/>
-                <button type="submit">Create</button>
+                <button type="submit">Save</button>
                 <button type="button" onClick={props.triggerPreviewOff}>Cancel</button>
             </form>
         </div>
     );
 };
 
-DirectoryPreview.propTypes = {
+DirectoryEdit.propTypes = {
     tab: PropTypes.number.isRequired,
-    onCreateDirectory: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    isSelected: PropTypes.bool.isRequired,
+    folded: PropTypes.bool.isRequired,
+    onEditDirectory: PropTypes.func.isRequired,
     triggerPreviewOff: PropTypes.func.isRequired,
 };
 
-export default DirectoryPreview;
+export default DirectoryEdit;
