@@ -24,3 +24,10 @@ export {
     deleteDirectoryFail,
     deleteDirectorySuccess,
 } from './directories';
+
+export {
+    fetchNotices,
+    fetchNoticesStart,
+    fetchNoticesFail,
+    fetchNoticesSuccess,
+} from './notices';

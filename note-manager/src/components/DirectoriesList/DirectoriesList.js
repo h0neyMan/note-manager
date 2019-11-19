@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Directory from './Directory/Directory';
 import DirectoryPreview from './DirectoryPreview/DirectoryPreview';
 import DirectoryEdit from './DirectoryEdit/DirectoryEdit';
-import { directoryShape } from '../../containers/NoteManager/PropTypes';
+import { directoryShape } from '../../containers/PropTypes';
 
 const DirectoriesList = props => {
     const currentTab = props.tab || 0;

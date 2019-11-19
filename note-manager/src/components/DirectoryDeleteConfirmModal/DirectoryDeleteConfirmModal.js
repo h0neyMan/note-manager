@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { directoryShape } from '../../containers/NoteManager/PropTypes';
+import { directoryShape } from '../../containers/PropTypes';
 import Modal from '../UI/Modal/Modal';
 
 const DirectoryDeleteConfirmModal = props => {

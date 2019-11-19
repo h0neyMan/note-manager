@@ -10,11 +10,7 @@ export function * fetchDirectories() {
         yield put(actions.fetchDirectoriesStart());
         const response = yield call([axios, 'get'], '/directories');
         const normalizedResponse = yield call(normalize, response.data);
-        const byIds = {
-            allIds: normalizedResponse.result,
-            byId: normalizedResponse.entities.directories,
-        };
-        yield put(actions.fetchDirectoriesSuccess(byIds));
+        yield put(actions.fetchDirectoriesSuccess(normalizedResponse));
     } catch (error) {
         yield put(actions.fetchDirectoriesFail(error));
     }

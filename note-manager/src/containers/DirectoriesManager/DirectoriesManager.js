@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import classes from './DirectoriesManager.module.css';
-import { getChildrenByParentSelector, getSelectedDirId, getRootDir } from '../../../store/selectors/directories';
+import { getChildrenByParentSelector, getSelectedDirId, getRootDir } from '../../store/selectors/directories';
 import {
     triggerDirectoryFold,
     selectDirectory,
     createDirectory,
     triggerCreatePreviewOff,
     editDirectory,
-    triggerEditPreviewOff } from '../../../store/actions';
+    triggerEditPreviewOff } from '../../store/actions';
 import { directoryShape } from '../PropTypes';
-import DirectoriesList from '../../../components/DirectoriesList/DirectoriesList';
+import DirectoriesList from '../../components/DirectoriesList/DirectoriesList';
 
 const DirectoriesManager = props => {
     let classNames = [classes.DirectoriesManager];

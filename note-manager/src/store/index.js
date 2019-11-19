@@ -2,8 +2,9 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import directoriesReducer from './reducers/directories';
+import noticesReducer from './reducers/notices';
 import directoriesManagerReducer from './reducers/DirectoriesManager';
-import { watchDirectories } from './sagas';
+import { watchDirectories, watchNotices } from './sagas';
 
 const composeEnhancers =
     process.env.NODE_ENV === 'development'
@@ -12,6 +13,7 @@ const composeEnhancers =
 
 const rootReducer = combineReducers({
     directories: directoriesReducer,
+    notices: noticesReducer,
     directoriesManager: directoriesManagerReducer,
 });
 
@@ -23,5 +25,6 @@ const store = createStore(
 );
 
 sagaMiddleware.run(watchDirectories);
+sagaMiddleware.run(watchNotices);
 
 export default store;

@@ -1,0 +1,17 @@
+.NoticesListHeader {
+    display: flex;
+}
+
+.NoticesList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex: 1;
+}
+
+.NoticesListFooter {
+    display: flex;
+    justify-content: center;
+}
