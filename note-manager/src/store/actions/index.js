@@ -23,6 +23,7 @@ export {
     deleteDirectoryStart,
     deleteDirectoryFail,
     deleteDirectorySuccess,
+    directoriesRedirect,
 } from './directories';
 
 export {
@@ -30,4 +31,10 @@ export {
     fetchNoticesStart,
     fetchNoticesFail,
     fetchNoticesSuccess,
+    createNoticeInit,
+    createNoticeRedirect,
+    createNotice,
+    createNoticeStart,
+    createNoticeFail,
+    createNoticeSuccess,
 } from './notices';

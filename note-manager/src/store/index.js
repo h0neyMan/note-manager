@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import directoriesReducer from './reducers/directories';
 import noticesReducer from './reducers/notices';
 import directoriesManagerReducer from './reducers/DirectoriesManager';
+import createNoticeReducer from './reducers/CreateNotice';
 import { watchDirectories, watchNotices } from './sagas';
 
 const composeEnhancers =
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     directories: directoriesReducer,
     notices: noticesReducer,
     directoriesManager: directoriesManagerReducer,
+    createNotice: createNoticeReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

@@ -58,3 +58,5 @@ export const deleteDirectoryStart = () => ({
 export const deleteDirectoryFail = createErrorActionCreator(actionTypes.DELETE_DIRECTORY_FAIL);
 
 export const deleteDirectorySuccess = createPayloadActionCreator(actionTypes.DELETE_DIRECTORY_SUCCESS);
+
+export const directoriesRedirect = createPayloadActionCreator(actionTypes.DIRECTORIES_REDIRECT);

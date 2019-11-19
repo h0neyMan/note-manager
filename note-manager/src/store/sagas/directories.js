@@ -57,3 +57,7 @@ export function * deleteDirectory({ payload: { id, parentId }}) {
         yield put(actions.deleteDirectoryFail(error));
     }
 }
+
+export function * directoriesRedirect({ payload: { redirect }}) {
+    yield call(redirect, '/');
+}

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const getById = state => state.directories.byId;
+export const getById = state => state.directories.byId;
 const getAllIds = state => state.directories.allIds;
 const getDirectoriesByParent = state => state.directoriesManager.directoriesByParent;
 const getRootDirId = state => state.directoriesManager.rootDirId;

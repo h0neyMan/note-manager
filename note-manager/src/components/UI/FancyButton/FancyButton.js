@@ -5,7 +5,10 @@ import classes from './FancyButton.module.css';
 
 const FancyButton = props => {
     return (
-        <button className={classes.FancyButton}>
+        <button
+            className={classes.FancyButton}
+            onClick={props.clicked}
+            type={props.type} >
             {props.children}
         </button>
     );
@@ -13,6 +16,8 @@ const FancyButton = props => {
 
 FancyButton.propTypes = {
     children: PropTypes.node.isRequired,
+    type: PropTypes.string,
+    clicked: PropTypes.func,
 };
 
 export default FancyButton;

@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import NoteManagerLayout from './containers/NoteManagerLayout/NoteManagerLayout';
 import NoticesList from './containers/NoticesList/NoticesList';
+import CreateNotice from './containers/CreateNotice/CreateNotice';
 import './App.css';
 
 const App = props => {
@@ -12,6 +13,7 @@ const App = props => {
             <NoteManagerLayout>
                 <Switch>
                     <Route path="/" exact component={NoticesList} />
+                    <Route path="/directory/create/:dirId" component={CreateNotice} />
                     <Redirect to="/" />
                 </Switch>
             </NoteManagerLayout>

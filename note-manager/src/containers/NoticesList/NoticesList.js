@@ -6,10 +6,17 @@ import { getNotices } from '../../store/selectors/notices';
 import { getSelectedDir } from '../../store/selectors/directories';
 import NoticeCard from '../../components/NoticeCard/NoticeCard';
 import FancyButton from '../../components/UI/FancyButton/FancyButton';
-import { directoryShape } from '../PropTypes';
+import { directoryShape, historyShape } from '../PropTypes';
+import { createNoticeRedirect } from '../../store/actions';
 import classes from './NoticesList.module.css';
 
 const NoticesList = props => {
+    const createNoticeHandler = () => {
+        props.createNoticeRedirect((routeName) => {
+            props.history.push(routeName);
+        }, props.selectedDir.id);
+    };
+
     return (
         <Fragment>
             <div className={classes.NoticesListHeader}>
@@ -26,7 +33,7 @@ const NoticesList = props => {
                     <p>Nothing to show here...</p>
                 )}
             <div className={classes.NoticesListFooter}>
-                <FancyButton>Create a new Note</FancyButton>
+                <FancyButton clicked={createNoticeHandler}>Create a new Note</FancyButton>
             </div>
         </Fragment>
     );
@@ -41,6 +48,8 @@ NoticesList.propTypes = {
         tags: PropTypes.arrayOf(PropTypes.string),
     })),
     selectedDir: directoryShape,
+    history: historyShape.isRequired,
+    createNoticeRedirect: PropTypes.func,
 };
 
 const mapStateToProps = state => {
@@ -50,4 +59,10 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(NoticesList);
+const mapDispatchToProps = dispatch => {
+    return {
+        createNoticeRedirect: (redirect, selectedDirId) => dispatch(createNoticeRedirect({ redirect, selectedDirId })),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoticesList);
