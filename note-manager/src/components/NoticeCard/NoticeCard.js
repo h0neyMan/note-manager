@@ -32,7 +32,7 @@ const NoticeCard = props => {
                 <h3 className={classes.NoteTitle} onClick={() => setEditing(true)}>{props.title}</h3>
             )}
             <div className={classes.ButtonContainer}>
-                <button>
+                <button onClick={() => props.updateNoticeRedirect(props.id)}>
                     <FontAwesomeIcon icon={faEdit} />
                 </button>
                 <button>
@@ -47,6 +47,7 @@ NoticeCard.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     updateNoticeTitle: PropTypes.func.isRequired,
+    updateNoticeRedirect: PropTypes.func.isRequired,
 };
 
 export default NoticeCard;

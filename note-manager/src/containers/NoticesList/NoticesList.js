@@ -7,15 +7,11 @@ import { getSelectedDir } from '../../store/selectors/directories';
 import NoticeCard from '../../components/NoticeCard/NoticeCard';
 import FancyButton from '../../components/UI/FancyButton/FancyButton';
 import { directoryShape, historyShape } from '../PropTypes';
-import { createNoticeRedirect, updateNoticeTitle } from '../../store/actions';
+import { createNoticeRedirect, updateNoticeTitle, updateNoticeRedirect } from '../../store/actions';
 import classes from './NoticesList.module.css';
 
 const NoticesList = props => {
-    const createNoticeHandler = () => {
-        props.createNoticeRedirect((routeName) => {
-            props.history.push(routeName);
-        }, props.selectedDir.id);
-    };
+    const redirect = (routeName) => props.history.push(routeName);
 
     return (
         <Fragment>
@@ -30,14 +26,15 @@ const NoticesList = props => {
                                 key={notice.id}
                                 id={notice.id}
                                 title={notice.title}
-                                updateNoticeTitle={props.updateNoticeTitle} />
+                                updateNoticeTitle={props.updateNoticeTitle}
+                                updateNoticeRedirect={(id) => props.updateNoticeRedirect(id, redirect)} />
                         ))}
                     </div>
                 ) : (
                     <p>Nothing to show here...</p>
                 )}
             <div className={classes.NoticesListFooter}>
-                <FancyButton clicked={createNoticeHandler}>Create a new Note</FancyButton>
+                <FancyButton clicked={() => props.createNoticeRedirect(redirect)}>Create a new Note</FancyButton>
             </div>
         </Fragment>
     );
@@ -55,6 +52,7 @@ NoticesList.propTypes = {
     history: historyShape.isRequired,
     createNoticeRedirect: PropTypes.func.isRequired,
     updateNoticeTitle: PropTypes.func.isRequired,
+    updateNoticeRedirect: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -66,8 +64,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        createNoticeRedirect: (redirect, selectedDirId) => dispatch(createNoticeRedirect({ redirect, selectedDirId })),
+        createNoticeRedirect: (redirect) => dispatch(createNoticeRedirect({ redirect })),
         updateNoticeTitle: (id, title) => dispatch(updateNoticeTitle({ id, title })),
+        updateNoticeRedirect: (id, redirect) => dispatch(updateNoticeRedirect({ id, redirect })),
     };
 };
 

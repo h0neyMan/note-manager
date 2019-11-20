@@ -9,8 +9,15 @@ export const historyShape = PropTypes.shape({
     push: PropTypes.func.isRequired,
 });
 
-export const matchShape = PropTypes.shape({
+export const noticeShape = PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+});
+
+export const getMatchShape = (paramName) => PropTypes.shape({
     params: PropTypes.shape({
-        dirId: PropTypes.string.isRequired,
+        [paramName]: PropTypes.string,
     }).isRequired,
 });

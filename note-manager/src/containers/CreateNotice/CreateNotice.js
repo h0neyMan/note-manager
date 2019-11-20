@@ -1,61 +1,60 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { createNotice, directoriesRedirect } from '../../store/actions';
+import { createNotice, directoriesRedirect, updateNoticeInit, updateNotice } from '../../store/actions';
 import { getSelectedDir } from '../../store/selectors/directories';
-import { directoryShape, historyShape, matchShape } from '../PropTypes';
+import { getEditingNotice, getEditingNoticeDir } from '../../store/selectors/notices';
+import { directoryShape, historyShape, getMatchShape, noticeShape } from '../PropTypes';
 import ManagerActionButton from '../../components/ManagerActionButton/ManagerActionButton';
-import Multiselect from '../../components/UI/Multiselect/Multiselect';
-import FancyButton from '../../components/UI/FancyButton/FancyButton';
+import EditNoticeForm from './EditNoticeForm/EditNoticeForm';
 import classes from './CreateNotice.module.css';
 
 const CreateNotice = props => {
-    let [values, setValues] = useState([]);
+    useEffect(() => {
+        const noticeId = props.match.params.noticeId;
+        props.updateNoticeInit(noticeId, props.isEdit);
+    }, [props.updateNoticeInit]);
 
-    const handleChange = (ev) => {
-        setValues(ev);
-    };
+    const redirect = (routeName) => props.history.push(routeName);
 
     const backToListHandler = () => {
-        props.directoriesRedirect((routeName) => props.history.push(routeName));
+        props.directoriesRedirect(redirect);
     };
 
-    const handleSubmit = (ev) => {
-        ev.preventDefault();
-        const data = {
-            title: ev.target.title.value,
-            description: ev.target.description.value,
-            tags: values.map(val => val.value),
-            directoryId: props.createNoticeDir.id,
-            redirect: (routeName) => props.history.push(routeName),
-        };
-        props.createNotice(data);
+    const handleSubmit = (title, description, tags) => {
+        if (props.isEdit) {
+            props.updateNotice(props.editingNotice.id, title, description, tags, redirect);
+        } else {
+            const data = {
+                title,
+                description,
+                tags,
+                directoryId: props.createNoticeDir.id,
+                redirect,
+            };
+            props.createNotice(data);
+        }
     };
 
     return (
         <div className={classes.CreateNotice}>
-            <h2>Create a notice in directory &apos;{props.createNoticeDir.name}&apos;</h2>
-            <form onSubmit={handleSubmit}>
-                <ul className={classes.Form}>
-                    <li>
-                        <label htmlFor="title">Title</label>
-                        <input type="text" id="title" placeholder="Enter Title here" required />
-                    </li>
-                    <li>
-                        <label htmlFor="description">Description</label>
-                        <textarea rows="6" id="description" placeholder="Enter some description here" required />
-                    </li>
-                    <li>
-                        <label htmlFor="tags">Tags</label>
-                        <Multiselect className={classes.Multiselect} values={values} handleChange={handleChange}/>
-                    </li>
-                </ul>
-                <div className={classes.SubmitContainer}>
-                    <FancyButton type="submit">Create</FancyButton>
-                </div>
-            </form>
+            <h2>
+                {props.isEdit
+                    ? `Update a notice '${props.editingNotice.title}' in directory '${props.editingNoticeDir.name}'`
+                    : `Create a notice in directory '${props.createNoticeDir.name}'`}
+            </h2>
+            {props.isEdit ? (
+                <EditNoticeForm
+                    handleSubmit={handleSubmit}
+                    title={props.editingNotice.title}
+                    tags={props.editingNotice.tags.map(tag => ({ label: tag, value: tag}))}
+                    description={props.editingNotice.description}
+                    actionText={'Save'} />
+            ) : (
+                <EditNoticeForm handleSubmit={handleSubmit} actionText={'Create'} />
+            )}
             <div>
                 <ManagerActionButton
                     icon={faArrowCircleLeft}
@@ -67,16 +66,23 @@ const CreateNotice = props => {
 };
 
 CreateNotice.propTypes = {
-    match: matchShape.isRequired,
     createNoticeDir: directoryShape.isRequired,
+    editingNoticeDir: directoryShape.isRequired,
+    editingNotice: noticeShape,
     history: historyShape.isRequired,
+    isEdit: PropTypes.bool.isRequired,
+    match: getMatchShape('noticeId').isRequired,
     createNotice: PropTypes.func.isRequired,
     directoriesRedirect: PropTypes.func.isRequired,
+    updateNoticeInit: PropTypes.func.isRequired,
+    updateNotice: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
     return {
         createNoticeDir: getSelectedDir(state),
+        editingNotice: getEditingNotice(state),
+        editingNoticeDir: getEditingNoticeDir(state),
     };
 };
 
@@ -84,6 +90,9 @@ const mapDispatchToProps = dispatch => {
     return {
         createNotice: (notice) => dispatch(createNotice(notice)),
         directoriesRedirect: (redirect) => dispatch(directoriesRedirect({ redirect })),
+        updateNoticeInit: (selectedNoteId, isEdit) => dispatch(updateNoticeInit({ selectedNoteId, isEdit })),
+        updateNotice: (id, title, description, tags, redirect) =>
+            dispatch(updateNotice({ id, title, description, tags, redirect })),
     };
 };
 

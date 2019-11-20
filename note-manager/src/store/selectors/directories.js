@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+export const emptyDir = { id: 0, name: '', __isEmpty: true };
 export const getById = state => state.directories.byId;
 const getAllIds = state => state.directories.allIds;
 const getDirectoriesByParent = state => state.directoriesManager.directoriesByParent;
@@ -20,7 +21,7 @@ export const getSelectedDir = createSelector(
     (byId, selectedDirId) => {
         return byId[selectedDirId]
             ? { ...byId[selectedDirId] }
-            : { id: 0, name: '' };
+            : emptyDir;
     },
 );
 
@@ -57,7 +58,7 @@ export const getRootDir = createSelector(
     getRootDirId,
     getRootDirIsCreatingSubfolder,
     (byId, rootDirId, rootDirIsCreatingSubfolder) => {
-        const rootDir = byId[rootDirId] ? byId[rootDirId] : { id: 0, name: '' };
+        const rootDir = byId[rootDirId] ? byId[rootDirId] : emptyDir;
         return { ...rootDir, isCreatingSubfolder: rootDirIsCreatingSubfolder };
     },
 );

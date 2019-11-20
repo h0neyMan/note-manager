@@ -24,10 +24,23 @@ const updateNoticeTitleSuccess = (state, { payload: { id, title }}) => {
     };
 };
 
+const updateNoticeSuccess = (state, { payload: { id, title, description, tags }}) => {
+    return {
+        ...state,
+        [id]: {
+            ...state[id],
+            title: title,
+            description: description,
+            tags: tags,
+        },
+    };
+};
+
 const reducer = createReducer(initialState, {
     [actionTypes.FETCH_NOTICES_SUCCESS]: fetchNoticesSuccess,
     [actionTypes.CREATE_NOTICE_SUCCESS]: createNoticeSuccess,
     [actionTypes.UPDATE_NOTICE_TITLE_SUCCESS]: updateNoticeTitleSuccess,
+    [actionTypes.UPDATE_NOTICE_SUCCESS]: updateNoticeSuccess,
 });
 
 export default reducer;

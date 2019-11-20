@@ -41,7 +41,7 @@ const setIsCreatingSubfolder = (state, id, parentId, newProperties) => {
         });
     }
 
-    return updateDirectoriesByParent(state, id, parentId, newProperties);
+    return updateDirectoriesByParent(state, id, parentId, () => newProperties);
 };
 
 const fetchDirectoriesSuccess = (state, { payload: { allIds, byId }}) => {

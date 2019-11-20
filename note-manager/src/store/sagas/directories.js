@@ -3,7 +3,7 @@ import { put, call, select } from 'redux-saga/effects';
 import * as actions from '../actions';
 import normalize from '../normalize/directories';
 import axios from '../../axios';
-import { getDirectoryIdsAffectedByDelete, getRootDirId } from '../selectors/directories';
+import { getDirectoryIdsAffectedByDelete, getRootDirId, getSelectedDirId } from '../selectors/directories';
 
 export function * fetchDirectories() {
     try {
@@ -59,7 +59,8 @@ export function * deleteDirectory({ payload: { id, parentId }}) {
 }
 
 export function * directoriesRedirect({ payload: { redirect }}) {
-    yield call(redirect, '/');
+    const selectedDirId = yield select(getSelectedDirId);
+    yield call(redirect, `/directory/${selectedDirId}`);
 }
 
 export function * directoryClick({ payload: { id, parentId, redirect }}) {
