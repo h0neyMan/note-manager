@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Multiselect from '../../../components/UI/Multiselect/Multiselect';
 import FancyButton from '../../../components/UI/FancyButton/FancyButton';
+import { tagArray } from '../../PropTypes';
 import classes from './EditNoticeForm.module.css';
 
 const useValueFromProps = (defaultValue, propsValue) => {
@@ -51,7 +52,8 @@ const EditNoticeForm = props => {
                     <Multiselect
                         className={classes.Multiselect}
                         values={tags}
-                        handleChange={e => setTags(e || [])}/>
+                        handleChange={e => setTags(e || [])}
+                        options={props.tagOptions}/>
                 </li>
             </ul>
             <div className={classes.SubmitContainer}>
@@ -64,7 +66,8 @@ const EditNoticeForm = props => {
 EditNoticeForm.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
-    tags: PropTypes.array,
+    tags: tagArray,
+    tagOptions: tagArray.isRequired,
     actionText: PropTypes.string.isRequired,
     handleSubmit: PropTypes.func.isRequired,
 };

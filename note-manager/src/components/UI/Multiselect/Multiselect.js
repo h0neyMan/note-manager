@@ -17,6 +17,7 @@ const Multiselect = props => {
             onChange={props.handleChange}
             value={props.values}
             getNewOptionData={newOptionDataHandler}
+            options={props.options}
             formatCreateLabel={value => `Create tag '${value}'`}
             isMulti />
     );
@@ -26,6 +27,10 @@ Multiselect.propTypes = {
     className: PropTypes.string,
     values: PropTypes.array,
     handleChange: PropTypes.func,
+    options: PropTypes.arrayOf(PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired,
+    })).isRequired,
 };
 
 export default Multiselect;

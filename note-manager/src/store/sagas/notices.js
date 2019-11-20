@@ -3,7 +3,7 @@ import { put, call, select } from 'redux-saga/effects';
 import * as actions from '../actions';
 import axios from '../../axios';
 import normalize from '../normalize/notices';
-import { getById } from '../selectors/notices';
+import { getById, getEditingNotice } from '../selectors/notices';
 import { getSelectedDirId } from '../selectors/directories';
 
 export function * fetchNotices() {
@@ -53,15 +53,16 @@ export function * updateNoticeTitle({ payload: { id, title }}) {
 export function * updateNotice({ payload: { id, title, description, tags, redirect }}) {
     try {
         yield put(actions.updateNoticeStart());
+        const oldNotice = yield select(getEditingNotice);
         const byId = yield select(getById);
-        const note = {
+        const notice = {
             ...byId[id],
             title,
             description,
             tags,
         };
-        yield call([axios, 'put'], `/notices/${id}`, note);
-        yield put(actions.updateNoticeSuccess({ id, title, description, tags }));
+        yield call([axios, 'put'], `/notices/${id}`, notice);
+        yield put(actions.updateNoticeSuccess({ id, title, description, tags, oldTags: oldNotice.tags }));
         const selectedDirId = yield select(getSelectedDirId);
         yield call(redirect, `/directory/${selectedDirId}`);
     } catch (error) {
@@ -69,11 +70,11 @@ export function * updateNotice({ payload: { id, title, description, tags, redire
     }
 }
 
-export function * deleteNotice({ payload: { id }}) {
+export function * deleteNotice({ payload: { id, tags }}) {
     try {
         yield put(actions.deleteNoticeStart());
         yield call([axios, 'delete'], `/notices/${id}`);
-        yield put(actions.deleteNoticeSuccess({ id }));
+        yield put(actions.deleteNoticeSuccess({ id, tags }));
         yield put(actions.deleteNoticeCancel());
     } catch (error) {
         yield put(actions.deleteNoticeFail(error));

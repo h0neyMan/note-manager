@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import directoriesReducer from './reducers/directories';
 import noticesReducer from './reducers/notices';
+import tagsReducer from './reducers/tags';
 import directoriesManagerReducer from './reducers/DirectoriesManager';
 import updateNoticeReducer from './reducers/UpdateNotice';
 import noticeListReducer from './reducers/NoticeList';
@@ -16,6 +17,7 @@ const composeEnhancers =
 const rootReducer = combineReducers({
     directories: directoriesReducer,
     notices: noticesReducer,
+    tags: tagsReducer,
     directoriesManager: directoriesManagerReducer,
     updateNotice: updateNoticeReducer,
     noticeList: noticeListReducer,

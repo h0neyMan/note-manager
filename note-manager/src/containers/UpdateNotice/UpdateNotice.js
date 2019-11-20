@@ -6,7 +6,8 @@ import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { createNotice, directoriesRedirect, updateNoticeInit, updateNotice } from '../../store/actions';
 import { getSelectedDir } from '../../store/selectors/directories';
 import { getEditingNotice, getEditingNoticeDir } from '../../store/selectors/notices';
-import { directoryShape, historyShape, getMatchShape, noticeShape } from '../PropTypes';
+import { getAvailableTagOptions } from '../../store/selectors/tags';
+import { directoryShape, historyShape, getMatchShape, noticeShape, tagArray } from '../PropTypes';
 import ManagerActionButton from '../../components/ManagerActionButton/ManagerActionButton';
 import EditNoticeForm from './EditNoticeForm/EditNoticeForm';
 import classes from './UpdateNotice.module.css';
@@ -51,9 +52,10 @@ const CreateNotice = props => {
                     title={props.editingNotice.title}
                     tags={props.editingNotice.tags.map(tag => ({ label: tag, value: tag}))}
                     description={props.editingNotice.description}
-                    actionText={'Save'} />
+                    actionText={'Save'}
+                    tagOptions={props.tagOptions} />
             ) : (
-                <EditNoticeForm handleSubmit={handleSubmit} actionText={'Create'} />
+                <EditNoticeForm handleSubmit={handleSubmit} actionText={'Create'} tagOptions={props.tagOptions} />
             )}
             <div>
                 <ManagerActionButton
@@ -72,6 +74,7 @@ CreateNotice.propTypes = {
     history: historyShape.isRequired,
     isEdit: PropTypes.bool.isRequired,
     match: getMatchShape('noticeId').isRequired,
+    tagOptions: tagArray.isRequired,
     createNotice: PropTypes.func.isRequired,
     directoriesRedirect: PropTypes.func.isRequired,
     updateNoticeInit: PropTypes.func.isRequired,
@@ -83,6 +86,7 @@ const mapStateToProps = state => {
         createNoticeDir: getSelectedDir(state),
         editingNotice: getEditingNotice(state),
         editingNoticeDir: getEditingNoticeDir(state),
+        tagOptions: getAvailableTagOptions(state),
     };
 };
 

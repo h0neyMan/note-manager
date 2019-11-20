@@ -34,7 +34,8 @@ const DirectoryEdit = props => {
                     className={classes.DirectoryNameInput}
                     type="text"
                     value={name}
-                    onChange={e => setName(e.target.value)}/>
+                    onChange={e => setName(e.target.value)}
+                    autoFocus/>
                 <button type="submit">Save</button>
                 <button type="button" onClick={props.triggerPreviewOff}>Cancel</button>
             </form>
