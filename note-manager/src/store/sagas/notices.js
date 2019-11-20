@@ -69,6 +69,17 @@ export function * updateNotice({ payload: { id, title, description, tags, redire
     }
 }
 
+export function * deleteNotice({ payload: { id }}) {
+    try {
+        yield put(actions.deleteNoticeStart());
+        yield call([axios, 'delete'], `/notices/${id}`);
+        yield put(actions.deleteNoticeSuccess({ id }));
+        yield put(actions.deleteNoticeCancel());
+    } catch (error) {
+        yield put(actions.deleteNoticeFail(error));
+    }
+}
+
 export function * updateNoticeRedirect({ payload: { id, redirect }}) {
     yield call(redirect, `/notice/edit/${id}`);
 }

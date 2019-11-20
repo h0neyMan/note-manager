@@ -35,7 +35,7 @@ const NoticeCard = props => {
                 <button onClick={() => props.updateNoticeRedirect(props.id)}>
                     <FontAwesomeIcon icon={faEdit} />
                 </button>
-                <button>
+                <button onClick={() => props.deleteNoticeConfirm(props.id)}>
                     <FontAwesomeIcon icon={faTrashAlt} />
                 </button>
             </div>
@@ -48,6 +48,7 @@ NoticeCard.propTypes = {
     title: PropTypes.string.isRequired,
     updateNoticeTitle: PropTypes.func.isRequired,
     updateNoticeRedirect: PropTypes.func.isRequired,
+    deleteNoticeConfirm: PropTypes.func.isRequired,
 };
 
 export default NoticeCard;

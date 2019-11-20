@@ -1,10 +1,12 @@
 import { createSelector } from 'reselect';
 import { getSelectedDirId, getById as getDirectoryById, emptyDir } from './directories';
 
-const emptyNotice = { id: 0, title: '', description: '', tags: [], __isEmpty: true };
+const emptyNotice = { id: 0, title: '', description: '', tags: [], directoryId: 0, __isEmpty: true };
 export const getById = state => state.notices.byId;
 const getAllIds = state => state.notices.allIds;
 const getSelectedNoteId = state => state.updateNotice.selectedNoteId;
+export const getIsDeleting = state => state.noticeList.isDeleting;
+const getDeletingNoticeId = state => state.noticeList.deletingNoticeId;
 
 export const getNotices = createSelector(
     getById,
@@ -27,4 +29,10 @@ export const getEditingNoticeDir = createSelector(
     (directoryById, editingNotice) => editingNotice && directoryById[editingNotice.directoryId]
         ? directoryById[editingNotice.directoryId]
         : emptyDir,
+);
+
+export const getDeletingNotice = createSelector(
+    getById,
+    getDeletingNoticeId,
+    (byId, deletingNoticeId) => deletingNoticeId && byId[deletingNoticeId] ? byId[deletingNoticeId] : emptyNotice,
 );

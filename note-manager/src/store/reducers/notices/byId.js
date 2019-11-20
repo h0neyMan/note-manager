@@ -36,11 +36,19 @@ const updateNoticeSuccess = (state, { payload: { id, title, description, tags }}
     };
 };
 
+const deleteNoticeSuccess = (state, { payload: { id }}) => {
+    return {
+        ...state,
+        [id]: undefined,
+    };
+};
+
 const reducer = createReducer(initialState, {
     [actionTypes.FETCH_NOTICES_SUCCESS]: fetchNoticesSuccess,
     [actionTypes.CREATE_NOTICE_SUCCESS]: createNoticeSuccess,
     [actionTypes.UPDATE_NOTICE_TITLE_SUCCESS]: updateNoticeTitleSuccess,
     [actionTypes.UPDATE_NOTICE_SUCCESS]: updateNoticeSuccess,
+    [actionTypes.DELETE_NOTICE_SUCCESS]: deleteNoticeSuccess,
 });
 
 export default reducer;

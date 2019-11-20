@@ -12,6 +12,7 @@ export const historyShape = PropTypes.shape({
 export const noticeShape = PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
+    directoryId: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
 });

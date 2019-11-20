@@ -47,4 +47,10 @@ export {
     updateNoticeSuccess,
     updateNoticeRedirect,
     updateNoticeInit,
+    deleteNoticeConfirm,
+    deleteNoticeCancel,
+    deleteNotice,
+    deleteNoticeStart,
+    deleteNoticeFail,
+    deleteNoticeSuccess,
 } from './notices';

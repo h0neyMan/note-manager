@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { directoryShape } from '../../containers/PropTypes';
 import Modal from '../UI/Modal/Modal';
 
 const DirectoryDeleteConfirmModal = props => {
     const submitHandler = (e) => {
         e.preventDefault();
-        props.onDeleteDirectory(props.directory);
+        props.onDeleteDirectory();
     };
 
     return (
         <Modal
             show={props.show}
             modalClosed={props.onCancelClick}>
-            <h2>Delete Directory &apos;{props.directory.name}&apos;</h2>
-            <p>Are you sure you want to delete this directory?</p>
+            <h2>{props.headerText}</h2>
+            <p>Are you sure you want to delete this {props.entityText}?</p>
             <form onSubmit={submitHandler}>
                 <button type="submit">Delete</button>
                 <button type="button" onClick={props.onCancelClick}>Cancel</button>
@@ -26,7 +25,8 @@ const DirectoryDeleteConfirmModal = props => {
 
 DirectoryDeleteConfirmModal.propTypes = {
     show: PropTypes.bool.isRequired,
-    directory: directoryShape.isRequired,
+    headerText: PropTypes.string.isRequired,
+    entityText: PropTypes.string.isRequired,
     onCancelClick: PropTypes.func.isRequired,
     onDeleteDirectory: PropTypes.func.isRequired,
 };

@@ -9,7 +9,7 @@ import { getEditingNotice, getEditingNoticeDir } from '../../store/selectors/not
 import { directoryShape, historyShape, getMatchShape, noticeShape } from '../PropTypes';
 import ManagerActionButton from '../../components/ManagerActionButton/ManagerActionButton';
 import EditNoticeForm from './EditNoticeForm/EditNoticeForm';
-import classes from './CreateNotice.module.css';
+import classes from './UpdateNotice.module.css';
 
 const CreateNotice = props => {
     useEffect(() => {
@@ -39,7 +39,7 @@ const CreateNotice = props => {
     };
 
     return (
-        <div className={classes.CreateNotice}>
+        <div className={classes.UpdateNotice}>
             <h2>
                 {props.isEdit
                     ? `Update a notice '${props.editingNotice.title}' in directory '${props.editingNoticeDir.name}'`

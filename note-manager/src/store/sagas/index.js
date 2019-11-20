@@ -16,6 +16,7 @@ import {
     createNoticeRedirect,
     updateNoticeRedirect,
     updateNotice,
+    deleteNotice,
 } from './notices';
 
 export function * watchDirectories() {
@@ -31,6 +32,7 @@ export function * watchNotices() {
     yield takeEvery(actionTypes.FETCH_NOTICES, fetchNotices);
     yield takeEvery(actionTypes.CREATE_NOTICE, createNotice);
     yield takeEvery(actionTypes.UPDATE_NOTICE, updateNotice);
+    yield takeEvery(actionTypes.DELETE_NOTICE, deleteNotice);
     yield takeEvery(actionTypes.UPDATE_NOTICE_TITLE, updateNoticeTitle);
     yield takeEvery(actionTypes.CREATE_NOTICE_REDIRECT, createNoticeRedirect);
     yield takeEvery(actionTypes.UPDATE_NOTICE_REDIRECT, updateNoticeRedirect);

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { faPlus, faTimes, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 import ManagerActionButton from '../../components/ManagerActionButton/ManagerActionButton';
-import DirectoryDeleteConfirmModal from '../../components/DirectoryDeleteConfirmModal/DirectoryDeleteConfirmModal';
+import DeleteConfirmModal from '../../components/DeleteConfirmModal/DeleteConfirmModal';
 import DirectoriesManager from '../DirectoriesManager/DirectoriesManager';
 import {
     fetchDirectories,
@@ -48,11 +48,12 @@ const NoteManager = props => {
             <div className={classes.NoteManagerContent}>
                 {props.children}
             </div>
-            <DirectoryDeleteConfirmModal
+            <DeleteConfirmModal
                 show={props.isDeleting}
-                directory={props.selectedDir}
+                headerText={`Delete Directory '${props.selectedDir.name}'`}
+                entityText={'directory'}
                 onCancelClick={props.deleteDirectoryCancel}
-                onDeleteDirectory={props.deleteDirectory} />
+                onDeleteDirectory={() => props.deleteDirectory(props.selectedDir)} />
         </div>
     );
 };
