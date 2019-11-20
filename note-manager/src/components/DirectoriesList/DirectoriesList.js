@@ -38,7 +38,7 @@ const DirectoriesList = props => {
                                 name={directory.name}
                                 isSelected={directory.id === props.selectedDirId}
                                 folded={directory.folded}
-                                onClick={() => props.triggerDirectoryFold(directory)}
+                                onClick={() => props.directoryClickHandler(directory)}
                                 onEditDirectory={(name) => editDirectoryHandler(name, directory)}
                                 triggerPreviewOff={() => props.triggerEditPreviewOff(directory)} />
                         ) : (
@@ -47,18 +47,18 @@ const DirectoriesList = props => {
                                 name={directory.name}
                                 isSelected={directory.id === props.selectedDirId}
                                 folded={directory.folded}
-                                onClick={() => props.triggerDirectoryFold(directory)} />
+                                onClick={() => props.directoryClickHandler(directory)} />
                         )}
                     <DirectoriesList
                         tab={currentTab + 1}
                         directory={directory}
                         selectedDirId={props.selectedDirId}
                         childrenByParentSelector={props.childrenByParentSelector}
-                        triggerDirectoryFold={props.triggerDirectoryFold}
                         onCreateDirectory={props.onCreateDirectory}
                         triggerCreatePreviewOff={props.triggerCreatePreviewOff}
                         onEditDirectory={props.onEditDirectory}
-                        triggerEditPreviewOff={props.triggerEditPreviewOff} />
+                        triggerEditPreviewOff={props.triggerEditPreviewOff}
+                        directoryClickHandler={props.directoryClickHandler} />
                 </Fragment>
             ));
         }
@@ -83,11 +83,11 @@ DirectoriesList.propTypes = {
     tab: PropTypes.number,
     selectedDirId: PropTypes.number,
     childrenByParentSelector: PropTypes.func.isRequired,
-    triggerDirectoryFold: PropTypes.func.isRequired,
     onCreateDirectory: PropTypes.func.isRequired,
     triggerCreatePreviewOff: PropTypes.func.isRequired,
     onEditDirectory: PropTypes.func.isRequired,
     triggerEditPreviewOff: PropTypes.func.isRequired,
+    directoryClickHandler: PropTypes.func.isRequired,
 };
 
 export default DirectoriesList;

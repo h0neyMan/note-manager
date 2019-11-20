@@ -1,7 +1,14 @@
 import { takeEvery } from 'redux-saga/effects';
 
 import * as actionTypes from '../actions/actionTypes';
-import { fetchDirectories, createDirectory, editDirectory, deleteDirectory, directoriesRedirect } from './directories';
+import {
+    fetchDirectories,
+    createDirectory,
+    editDirectory,
+    deleteDirectory,
+    directoriesRedirect,
+    directoryClick,
+} from './directories';
 import { fetchNotices, createNotice, updateNoticeTitle, createNoticePreviewRedirect } from './notices';
 
 export function * watchDirectories() {
@@ -10,6 +17,7 @@ export function * watchDirectories() {
     yield takeEvery(actionTypes.EDIT_DIRECTORY, editDirectory);
     yield takeEvery(actionTypes.DELETE_DIRECTORY, deleteDirectory);
     yield takeEvery(actionTypes.DIRECTORIES_REDIRECT, directoriesRedirect);
+    yield takeEvery(actionTypes.DIRECTORY_CLICK, directoryClick);
 }
 
 export function * watchNotices() {

@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 export const getById = state => state.directories.byId;
 const getAllIds = state => state.directories.allIds;
 const getDirectoriesByParent = state => state.directoriesManager.directoriesByParent;
-const getRootDirId = state => state.directoriesManager.rootDirId;
+export const getRootDirId = state => state.directoriesManager.rootDirId;
 const getRootDirIsCreatingSubfolder = state => state.directoriesManager.rootDirIsCreatingSubfolder;
 export const getIsDeleting = state => state.directoriesManager.isDeleting;
 export const getSelectedDirId = state => state.directoriesManager.selectedDirectoryId;

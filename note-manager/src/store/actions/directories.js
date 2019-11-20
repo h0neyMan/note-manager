@@ -43,6 +43,8 @@ export const editDirectorySuccess = createPayloadActionCreator(actionTypes.EDIT_
 
 export const triggerDirectoryFold = createPayloadActionCreator(actionTypes.TRIGGER_DIRECTORY_FOLD);
 
+export const directoryClick = createPayloadActionCreator(actionTypes.DIRECTORY_CLICK);
+
 export const selectDirectory = createPayloadActionCreator(actionTypes.SELECT_DIRECTORY);
 
 export const deleteDirectoryConfirm = createPayloadActionCreator(actionTypes.DELETE_DIRECTORY_CONFIRM);

@@ -29,12 +29,8 @@ const updateDirectoriesByParent = (state, id, parentId, newPropertiesProvider) =
         [parentId]: updatedArray,
     });
 
-    return updatedDirectoriesByParent;
-};
-
-const updateDirectoriesByParentState = (state, id, parentId, newProperties) => {
     return updateObject(state, {
-        directoriesByParent: updateDirectoriesByParent(state, id, parentId, () => newProperties),
+        directoriesByParent: updatedDirectoriesByParent,
     });
 };
 
@@ -45,7 +41,7 @@ const setIsCreatingSubfolder = (state, id, parentId, newProperties) => {
         });
     }
 
-    return updateDirectoriesByParentState(state, id, parentId, newProperties);
+    return updateDirectoriesByParent(state, id, parentId, newProperties);
 };
 
 const fetchDirectoriesSuccess = (state, { payload: { allIds, byId }}) => {
@@ -68,15 +64,13 @@ const fetchDirectoriesSuccess = (state, { payload: { allIds, byId }}) => {
 };
 
 const createDirectoryPreview = (state, action) => {
-    return setIsCreatingSubfolder(state,
-        state.selectedDirectoryId,
-        state.selectedDirectoryParentId,
+    return setIsCreatingSubfolder(state, state.selectedDirectoryId, state.selectedDirectoryParentId,
         { folded: false, isCreatingSubfolder: true });
 };
 
 const triggerCreatePreviewOff = (state, { payload: { id, parentId } }) => {
-    return setIsCreatingSubfolder(state,
-        id, parentId, { isCreatingSubfolder: false });
+    return setIsCreatingSubfolder(state, id, parentId,
+        { isCreatingSubfolder: false });
 };
 
 const createDirectorySuccess = (state, { payload: { id, parentId }}) => {
@@ -92,33 +86,25 @@ const createDirectorySuccess = (state, { payload: { id, parentId }}) => {
 };
 
 const triggerDirectoryFold = (state, { payload: { id, parentId } }) => {
-    const updatedDirectoriesByParent = updateDirectoriesByParent(
-        state, id, parentId, dir => ({ folded: !dir.folded, isCreatingSubfolder: false }));
-
-    return updateObject(state, {
-        directoriesByParent: updatedDirectoriesByParent,
-        selectedDirectoryId: id,
-        selectedDirectoryParentId: parentId,
-    });
+    return updateDirectoriesByParent(state, id, parentId,
+        dir => ({ folded: !dir.folded, isCreatingSubfolder: false }));
 };
 
-const selectDirectory = (state, { payload: { id } }) => {
+const selectDirectory = (state, { payload: { id, parentId } }) => {
     return updateObject(state, {
         selectedDirectoryId: id,
-        selectedDirectoryParentId: null,
+        selectedDirectoryParentId: parentId || null,
     });
 };
 
 const editDirectoryPreview = (state, action) => {
-    return updateDirectoriesByParentState(state,
-        state.selectedDirectoryId,
-        state.selectedDirectoryParentId,
-        { isEditing: true });
+    return updateDirectoriesByParent(state, state.selectedDirectoryId, state.selectedDirectoryParentId,
+        () => ({ isEditing: true }));
 };
 
 const triggerEditPreviewOff = (state, { payload: { id, parentId } }) => {
-    return updateDirectoriesByParentState(state,
-        id, parentId, { isEditing: false });
+    return updateDirectoriesByParent(state, id, parentId,
+        () => ({ isEditing: false }));
 };
 
 const deleteDirectoryConfirm = (state, action) => {

@@ -9,8 +9,6 @@ export const fetchNoticesFail = createErrorActionCreator(actionTypes.FETCH_NOTIC
 
 export const fetchNoticesSuccess = createPayloadActionCreator(actionTypes.FETCH_NOTICES_SUCCESS);
 
-export const createNoticeInit = createPayloadActionCreator(actionTypes.CREATE_NOTICE_INIT);
-
 export const createNoticeRedirect = createPayloadActionCreator(actionTypes.CREATE_NOTICE_REDIRECT);
 
 export const createNotice = createPayloadActionCreator(actionTypes.CREATE_NOTICE);

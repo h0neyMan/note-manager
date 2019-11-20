@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
-import { createNoticeInit, createNotice, directoriesRedirect } from '../../store/actions';
-import { getCreateNoticeDir } from '../../store/selectors/notices';
+import { createNotice, directoriesRedirect } from '../../store/actions';
+import { getSelectedDir } from '../../store/selectors/directories';
 import { directoryShape, historyShape, matchShape } from '../PropTypes';
 import ManagerActionButton from '../../components/ManagerActionButton/ManagerActionButton';
 import Multiselect from '../../components/UI/Multiselect/Multiselect';
@@ -12,9 +12,6 @@ import FancyButton from '../../components/UI/FancyButton/FancyButton';
 import classes from './CreateNotice.module.css';
 
 const CreateNotice = props => {
-    useEffect(() => {
-        props.createNoticeInit(+props.match.params.dirId);
-    }, [props.createNoticeInit]);
     let [values, setValues] = useState([]);
 
     const handleChange = (ev) => {
@@ -73,20 +70,18 @@ CreateNotice.propTypes = {
     match: matchShape.isRequired,
     createNoticeDir: directoryShape.isRequired,
     history: historyShape.isRequired,
-    createNoticeInit: PropTypes.func.isRequired,
     createNotice: PropTypes.func.isRequired,
     directoriesRedirect: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
     return {
-        createNoticeDir: getCreateNoticeDir(state),
+        createNoticeDir: getSelectedDir(state),
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        createNoticeInit: (selectedDirId) => dispatch(createNoticeInit({ selectedDirId })),
         createNotice: (notice) => dispatch(createNotice(notice)),
         directoriesRedirect: (redirect) => dispatch(directoriesRedirect({ redirect })),
     };
