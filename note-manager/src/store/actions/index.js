@@ -37,4 +37,8 @@ export {
     createNoticeStart,
     createNoticeFail,
     createNoticeSuccess,
+    updateNoticeTitle,
+    updateNoticeTitleStart,
+    updateNoticeTitleFail,
+    updateNoticeTitleSuccess,
 } from './notices';

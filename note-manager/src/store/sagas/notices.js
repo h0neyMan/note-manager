@@ -1,8 +1,9 @@
-import { put, call } from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 
 import * as actions from '../actions';
 import axios from '../../axios';
 import normalize from '../normalize/notices';
+import { getById } from '../selectors/notices';
 
 export function * fetchNotices() {
     try {
@@ -32,6 +33,21 @@ export function * createNotice({ payload: { title, description, tags, directoryI
     }
 }
 
+export function * updateNoticeTitle({ payload: { id, title }}) {
+    try {
+        yield put(actions.updateNoticeTitleStart());
+        const byId = yield select(getById);
+        const note = {
+            ...byId[id],
+            title: title,
+        };
+        yield call([axios, 'put'], `/notices/${id}`, note);
+        yield put(actions.updateNoticeTitleSuccess({ id, title }));
+    } catch (error) {
+        yield put(actions.updateNoticeTitleFail(error));
+    }
+}
+
 export function * createNoticePreviewRedirect({ payload: { redirect, selectedDirId }}) {
-    yield call(redirect, `/directory/create/${selectedDirId}`);
+    yield call(redirect, `/notice/create/${selectedDirId}`);
 }

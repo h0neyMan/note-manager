@@ -7,7 +7,7 @@ import { getSelectedDir } from '../../store/selectors/directories';
 import NoticeCard from '../../components/NoticeCard/NoticeCard';
 import FancyButton from '../../components/UI/FancyButton/FancyButton';
 import { directoryShape, historyShape } from '../PropTypes';
-import { createNoticeRedirect } from '../../store/actions';
+import { createNoticeRedirect, updateNoticeTitle } from '../../store/actions';
 import classes from './NoticesList.module.css';
 
 const NoticesList = props => {
@@ -26,7 +26,11 @@ const NoticesList = props => {
                 ? (
                     <div className={classes.NoticesList}>
                         {props.notices.map(notice => (
-                            <NoticeCard key={notice.id} title={notice.title} />
+                            <NoticeCard
+                                key={notice.id}
+                                id={notice.id}
+                                title={notice.title}
+                                updateNoticeTitle={props.updateNoticeTitle} />
                         ))}
                     </div>
                 ) : (
@@ -49,7 +53,8 @@ NoticesList.propTypes = {
     })),
     selectedDir: directoryShape,
     history: historyShape.isRequired,
-    createNoticeRedirect: PropTypes.func,
+    createNoticeRedirect: PropTypes.func.isRequired,
+    updateNoticeTitle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -62,6 +67,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         createNoticeRedirect: (redirect, selectedDirId) => dispatch(createNoticeRedirect({ redirect, selectedDirId })),
+        updateNoticeTitle: (id, title) => dispatch(updateNoticeTitle({ id, title })),
     };
 };
 

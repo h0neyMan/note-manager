@@ -20,3 +20,11 @@ export const createNoticeStart = () => ({ type: actionTypes.CREATE_NOTICE_START 
 export const createNoticeFail = createErrorActionCreator(actionTypes.CREATE_NOTICE_FAIL);
 
 export const createNoticeSuccess = createPayloadActionCreator(actionTypes.CREATE_NOTICE_SUCCESS);
+
+export const updateNoticeTitle = createPayloadActionCreator(actionTypes.UPDATE_NOTICE_TITLE);
+
+export const updateNoticeTitleStart = () => ({ type: actionTypes.UPDATE_NOTICE_TITLE_START });
+
+export const updateNoticeTitleFail = createErrorActionCreator(actionTypes.UPDATE_NOTICE_TITLE_FAIL);
+
+export const updateNoticeTitleSuccess = createPayloadActionCreator(actionTypes.UPDATE_NOTICE_TITLE_SUCCESS);

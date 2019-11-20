@@ -13,7 +13,7 @@ const App = props => {
             <NoteManagerLayout>
                 <Switch>
                     <Route path="/" exact component={NoticesList} />
-                    <Route path="/directory/create/:dirId" component={CreateNotice} />
+                    <Route path="/notice/create/:dirId" component={CreateNotice} />
                     <Redirect to="/" />
                 </Switch>
             </NoteManagerLayout>

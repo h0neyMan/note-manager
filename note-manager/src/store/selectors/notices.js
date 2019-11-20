@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { getSelectedDirId, getById as getDirectoryById } from './directories';
 
-const getById = state => state.notices.byId;
+export const getById = state => state.notices.byId;
 const getAllIds = state => state.notices.allIds;
 const getCreateNoticeSelectedDirId = state => state.createNotice.selectedDirectoryId;
 
