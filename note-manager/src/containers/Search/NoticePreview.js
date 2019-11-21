@@ -15,7 +15,6 @@ const NoticePreview = props => {
         props.noticePreviewInit(noticeId);
     }, [props.noticePreviewInit]);
 
-    console.log(props.notice.description.split(/\n/));
     return (
         <Fragment>
             <h2 className={classes.PageTitle}>

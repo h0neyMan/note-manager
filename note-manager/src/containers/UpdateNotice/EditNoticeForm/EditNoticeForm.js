@@ -35,6 +35,7 @@ const EditNoticeForm = props => {
                         value={title}
                         onChange={e => setTitle(e.target.value)}
                         placeholder="Enter Title here"
+                        autoFocus
                         required />
                 </li>
                 <li>
