@@ -12,7 +12,7 @@ const NoticesList = props => {
             })}
         </div>
     ) : (
-        <p>Nothing to show here...</p>
+        <p className={classes.NoResults}>Nothing to show here...</p>
     );
 };
 

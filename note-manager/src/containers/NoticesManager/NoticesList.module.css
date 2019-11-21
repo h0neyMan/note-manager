@@ -6,3 +6,7 @@
     align-content: flex-start;
     flex: 1;
 }
+
+.NoResults {
+    padding: 2em;
+}
