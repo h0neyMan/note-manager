@@ -1,0 +1,8 @@
+.SearchContainer {
+    padding: 1em;
+}
+
+.SearchContainer input {
+    font-size: 1em;
+    padding: 0.5em;
+}

@@ -60,11 +60,11 @@ export function * deleteDirectory({ payload: { id, parentId }}) {
 
 export function * directoriesRedirect({ payload: { redirect }}) {
     const selectedDirId = yield select(getSelectedDirId);
-    yield call(redirect, `/directory/${selectedDirId}`);
+    yield call(redirect, `/directories/${selectedDirId}`);
 }
 
 export function * directoryClick({ payload: { id, parentId, redirect }}) {
-    yield call(redirect, `/directory/${id}`);
+    yield call(redirect, `/directories/${id}`);
     const rootId = yield select(getRootDirId);
     yield put(actions.selectDirectory({ id, parentId }));
     if (id !== rootId) {

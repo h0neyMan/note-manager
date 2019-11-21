@@ -1,30 +1,60 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Layout from './hoc/Layout/Layout';
 import NoteManagerLayout from './containers/NoteManagerLayout/NoteManagerLayout';
-import NoticesList from './containers/NoticesList/NoticesList';
+import NoticesManager from './containers/NoticesManager/NoticesManager';
 import UpdateNotice from './containers/UpdateNotice/UpdateNotice';
+import Search from './containers/Search/Search';
+import { fetchDirectories, fetchNotices } from './store/actions';
 import './App.css';
 
 const App = props => {
+    useEffect(() => {
+        props.fetchDirectories();
+    }, [props.fetchDirectories]);
+
+    useEffect(() => {
+        props.fetchNotices();
+    }, [props.fetchNotices]);
+
     return (
         <Layout>
-            <NoteManagerLayout>
-                <Switch>
-                    <Route path="/" exact component={NoticesList} />
-                    <Route path="/directory/:dirId" component={NoticesList} />
-                    <Route
-                        path="/notice/create"
-                        render={props => <UpdateNotice {...props} isEdit={false} />}/>
-                    <Route
-                        path="/notice/edit/:noticeId"
-                        render={props => <UpdateNotice {...props} isEdit={true} />}/>
-                    <Redirect to="/" />
-                </Switch>
-            </NoteManagerLayout>
+            <Switch>
+                <Route path="/directories">
+                    <NoteManagerLayout>
+                        <Switch>
+                            <Route
+                                path="/directories/notices/edit/:noticeId"
+                                render={props => <UpdateNotice {...props} isEdit={true} />}/>
+                            <Route
+                                path="/directories/notices/create"
+                                render={props => <UpdateNotice {...props} isEdit={false} />}/>
+                            <Route path="/directories/:dirId" component={NoticesManager} />
+                            <Route path="/directories" component={NoticesManager} />
+                        </Switch>
+                    </NoteManagerLayout>
+                </Route>
+                <Route path="/search" component={Search} />
+                <Redirect to="/directories" />
+            </Switch>
         </Layout>
     );
 };
 
-export default App;
+
+App.propTypes = {
+    fetchDirectories: PropTypes.func.isRequired,
+    fetchNotices: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchDirectories: () => dispatch(fetchDirectories()),
+        fetchNotices: () => dispatch(fetchNotices()),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(App);

@@ -29,7 +29,7 @@ export function * createNotice({ payload: { title, description, tags, directoryI
         const response = yield call([axios, 'post'], '/notices', data);
         yield put(actions.createNoticeSuccess(response.data));
         const selectedDirId = yield select(getSelectedDirId);
-        yield call(redirect, `/directory/${selectedDirId}`);
+        yield call(redirect, `/directories/${selectedDirId}`);
     } catch (error) {
         yield put(actions.createNoticeFail(error));
     }
@@ -64,7 +64,7 @@ export function * updateNotice({ payload: { id, title, description, tags, redire
         yield call([axios, 'put'], `/notices/${id}`, notice);
         yield put(actions.updateNoticeSuccess({ id, title, description, tags, oldTags: oldNotice.tags }));
         const selectedDirId = yield select(getSelectedDirId);
-        yield call(redirect, `/directory/${selectedDirId}`);
+        yield call(redirect, `/directories/${selectedDirId}`);
     } catch (error) {
         yield put(actions.updateNoticeFail(error));
     }
@@ -82,9 +82,9 @@ export function * deleteNotice({ payload: { id, tags }}) {
 }
 
 export function * updateNoticeRedirect({ payload: { id, redirect }}) {
-    yield call(redirect, `/notice/edit/${id}`);
+    yield call(redirect, `/directories/notices/edit/${id}`);
 }
 
 export function * createNoticeRedirect({ payload: { redirect }}) {
-    yield call(redirect, '/notice/create');
+    yield call(redirect, '/directories/notices/create');
 }

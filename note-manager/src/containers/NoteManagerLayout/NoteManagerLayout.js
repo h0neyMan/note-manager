@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { faPlus, faTimes, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
@@ -7,26 +7,17 @@ import ManagerActionButton from '../../components/ManagerActionButton/ManagerAct
 import DeleteConfirmModal from '../../components/DeleteConfirmModal/DeleteConfirmModal';
 import DirectoriesManager from '../DirectoriesManager/DirectoriesManager';
 import {
-    fetchDirectories,
     createDirectoryPreview,
     editDirectoryPreview,
     deleteDirectoryConfirm,
     deleteDirectoryCancel,
     deleteDirectory,
-    fetchNotices } from '../../store/actions';
+} from '../../store/actions';
 import { getIsEditAndDeleteEnabled, getIsDeleting, getSelectedDir } from '../../store/selectors/directories';
 import { directoryShape } from '../PropTypes';
 import classes from './NoteManagerLayout.module.css';
 
 const NoteManager = props => {
-    useEffect(() => {
-        props.fetchDirectories();
-    }, [props.fetchDirectories]);
-
-    useEffect(() => {
-        props.fetchNotices();
-    }, [props.fetchNotices]);
-
     return (
         <div className={classes.NoteManager}>
             <div className={classes.SidePanel}>
@@ -63,13 +54,11 @@ NoteManager.propTypes = {
     isDeleting: PropTypes.bool.isRequired,
     selectedDir: directoryShape.isRequired,
     children: PropTypes.node.isRequired,
-    fetchDirectories: PropTypes.func.isRequired,
     createDirectoryPreview: PropTypes.func.isRequired,
     editDirectoryPreview: PropTypes.func.isRequired,
     deleteDirectoryConfirm: PropTypes.func.isRequired,
     deleteDirectoryCancel: PropTypes.func.isRequired,
     deleteDirectory: PropTypes.func.isRequired,
-    fetchNotices: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -82,8 +71,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchDirectories: () => dispatch(fetchDirectories()),
-        fetchNotices: () => dispatch(fetchNotices()),
         createDirectoryPreview: () => dispatch(createDirectoryPreview()),
         editDirectoryPreview: () => dispatch(editDirectoryPreview()),
         deleteDirectoryConfirm: () => dispatch(deleteDirectoryConfirm()),

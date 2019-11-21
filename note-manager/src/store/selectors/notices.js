@@ -15,6 +15,12 @@ export const getNotices = createSelector(
     (byId, allIds, selectedDirId) => allIds.map(id => byId[id]).filter(notice => notice.directoryId === selectedDirId),
 );
 
+export const getAllNotices = createSelector(
+    getById,
+    getAllIds,
+    (byId, allIds) => allIds.map(id => byId[id]),
+);
+
 export const getEditingNotice = createSelector(
     getById,
     getSelectedNoteId,

@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 
 import { getNotices, getIsDeleting, getDeletingNotice } from '../../store/selectors/notices';
 import { getSelectedDir } from '../../store/selectors/directories';
-import NoticeCard from '../../components/NoticeCard/NoticeCard';
 import FancyButton from '../../components/UI/FancyButton/FancyButton';
 import DeleteConfirmModal from '../../components/DeleteConfirmModal/DeleteConfirmModal';
+import NoticeCard from '../../components/NoticeCard/NoticeCard';
+import NoticeCardContent from '../../components/NoticeCard/NoticeCardContent';
+import NoticesList from './NoticesList';
 import { directoryShape, historyShape, noticeShape } from '../PropTypes';
 import {
     createNoticeRedirect,
@@ -16,9 +18,9 @@ import {
     deleteNoticeConfirm,
     deleteNoticeCancel,
 } from '../../store/actions';
-import classes from './NoticesList.module.css';
+import classes from './NoticesManager.module.css';
 
-const NoticesList = props => {
+const NoticesManager = props => {
     const redirect = (routeName) => props.history.push(routeName);
 
     return (
@@ -26,22 +28,18 @@ const NoticesList = props => {
             <div className={classes.NoticesListHeader}>
                 <h2>Contents of &apos;{props.selectedDir.name}&apos;</h2>
             </div>
-            {props.notices.length > 0
-                ? (
-                    <div className={classes.NoticesList}>
-                        {props.notices.map(notice => (
-                            <NoticeCard
-                                key={notice.id}
-                                id={notice.id}
-                                title={notice.title}
-                                updateNoticeTitle={props.updateNoticeTitle}
-                                updateNoticeRedirect={(id) => props.updateNoticeRedirect(id, redirect)}
-                                deleteNoticeConfirm={props.deleteNoticeConfirm} />
-                        ))}
-                    </div>
-                ) : (
-                    <p>Nothing to show here...</p>
+            <NoticesList notices={props.notices}>
+                {(notice) => (
+                    <NoticeCard key={notice.id}>
+                        <NoticeCardContent
+                            id={notice.id}
+                            title={notice.title}
+                            updateNoticeTitle={props.updateNoticeTitle}
+                            updateNoticeRedirect={(id) => props.updateNoticeRedirect(id, redirect)}
+                            deleteNoticeConfirm={props.deleteNoticeConfirm} />
+                    </NoticeCard>
                 )}
+            </NoticesList>
             <div className={classes.NoticesListFooter}>
                 <FancyButton clicked={() => props.createNoticeRedirect(redirect)}>Create a new Note</FancyButton>
             </div>
@@ -55,7 +53,7 @@ const NoticesList = props => {
     );
 };
 
-NoticesList.propTypes = {
+NoticesManager.propTypes = {
     notices: PropTypes.arrayOf(noticeShape).isRequired,
     isDeleting: PropTypes.bool.isRequired,
     deletingNotice: noticeShape,
@@ -89,4 +87,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NoticesList);
+export default connect(mapStateToProps, mapDispatchToProps)(NoticesManager);
