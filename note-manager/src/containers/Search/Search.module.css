@@ -21,3 +21,7 @@
 .SearchContainer.AdvancedSearchContainer .Autocomplete {
     flex: 1 0 auto;
 }
+
+.NoticeTitle {
+    cursor: pointer;
+}

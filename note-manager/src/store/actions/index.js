@@ -62,4 +62,6 @@ export {
     advancedSearchTitle,
     advancedSearchContent,
     advancedSearchTags,
+    noticePreviewRedirect,
+    noticePreviewInit,
 } from './search';

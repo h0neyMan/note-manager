@@ -8,6 +8,7 @@ import NoteManagerLayout from './containers/NoteManagerLayout/NoteManagerLayout'
 import NoticesManager from './containers/NoticesManager/NoticesManager';
 import UpdateNotice from './containers/UpdateNotice/UpdateNotice';
 import Search from './containers/Search/Search';
+import NoticePreview from './containers/Search/NoticePreview';
 import { fetchDirectories, fetchNotices } from './store/actions';
 import './App.css';
 
@@ -37,7 +38,12 @@ const App = props => {
                         </Switch>
                     </NoteManagerLayout>
                 </Route>
-                <Route path="/search" component={Search} />
+                <Route path="/search">
+                    <Switch>
+                        <Route path="/search/notice/:noticeId" component={NoticePreview} />
+                        <Route path="/search" component={Search} />
+                    </Switch>
+                </Route>
                 <Redirect to="/directories" />
             </Switch>
         </Layout>

@@ -18,6 +18,7 @@ import {
     updateNotice,
     deleteNotice,
 } from './notices';
+import { noticePreviewRedirect } from './search';
 
 export function * watchDirectories() {
     yield takeEvery(actionTypes.FETCH_DIRECTORIES, fetchDirectories);
@@ -36,4 +37,8 @@ export function * watchNotices() {
     yield takeEvery(actionTypes.UPDATE_NOTICE_TITLE, updateNoticeTitle);
     yield takeEvery(actionTypes.CREATE_NOTICE_REDIRECT, createNoticeRedirect);
     yield takeEvery(actionTypes.UPDATE_NOTICE_REDIRECT, updateNoticeRedirect);
+}
+
+export function * watchSearch() {
+    yield takeEvery(actionTypes.NOTICE_PREVIEW_REDIRECT, noticePreviewRedirect);
 }

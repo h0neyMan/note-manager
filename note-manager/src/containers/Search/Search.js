@@ -9,6 +9,7 @@ import {
     advancedSearchTitle,
     advancedSearchContent,
     advancedSearchTags,
+    noticePreviewRedirect,
 } from '../../store/actions';
 import {
     getNoticeTitleOptions,
@@ -20,7 +21,7 @@ import {
     getCurrentTagsSearchOptions,
 } from '../../store/selectors/search';
 import { getAvailableTagOptions } from '../../store/selectors/tags';
-import { noticeShape, optionsArray, option } from '../PropTypes';
+import { noticeShape, optionsArray, option, historyShape } from '../PropTypes';
 import NoticeCard from '../../components/NoticeCard/NoticeCard';
 import Autocomplete from '../../components/UI/Autocomplete/Autocomplete';
 import Multiselect from '../../components/UI/Multiselect/Multiselect';
@@ -29,6 +30,8 @@ import classes from './Search.module.css';
 import FancyButton from '../../components/UI/FancyButton/FancyButton';
 
 const Search = props => {
+    const redirect = (routeName) => props.history.push(routeName);
+
     return (
         <Fragment>
             {!props.isAdvanced ? (
@@ -71,7 +74,9 @@ const Search = props => {
             <NoticesList notices={props.notices}>
                 {(notice) => (
                     <NoticeCard key={notice.id}>
-                        <h3>{notice.title}</h3>
+                        <h3
+                            className={classes.NoticeTitle}
+                            onClick={() => props.noticePreviewRedirect(notice.id, redirect)}>{notice.title}</h3>
                     </NoticeCard>
                 )}
             </NoticesList>
@@ -88,12 +93,14 @@ Search.propTypes = {
     currentTitleSearchOption: option,
     currentContentSearchOption: option,
     currentTagsSearchOptions: optionsArray,
+    history: historyShape.isRequired,
     search: PropTypes.func.isRequired,
     switchToAdvancedSearch: PropTypes.func.isRequired,
     switchToSimpleSearch: PropTypes.func.isRequired,
     advancedSearchTitle: PropTypes.func.isRequired,
     advancedSearchContent: PropTypes.func.isRequired,
     advancedSearchTags: PropTypes.func.isRequired,
+    noticePreviewRedirect: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -117,6 +124,7 @@ const mapDispatchToProps = dispatch => {
         advancedSearchTitle: (title) => dispatch(advancedSearchTitle({ title })),
         advancedSearchContent: (content) => dispatch(advancedSearchContent({ content })),
         advancedSearchTags: (tags) => dispatch(advancedSearchTags({ tags })),
+        noticePreviewRedirect: (noticeId, redirect) => dispatch(noticePreviewRedirect({ noticeId, redirect })),
     };
 };
 

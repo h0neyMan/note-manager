@@ -12,3 +12,7 @@ export const advancedSearchTitle = createPayloadActionCreator(actionTypes.ADVANC
 export const advancedSearchContent = createPayloadActionCreator(actionTypes.ADVANCED_SEARCH_CONTENT);
 
 export const advancedSearchTags = createPayloadActionCreator(actionTypes.ADVANCED_SEARCH_TAGS);
+
+export const noticePreviewRedirect = createPayloadActionCreator(actionTypes.NOTICE_PREVIEW_REDIRECT);
+
+export const noticePreviewInit = createPayloadActionCreator(actionTypes.NOTICE_PREVIEW_INIT);

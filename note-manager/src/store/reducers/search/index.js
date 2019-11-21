@@ -2,18 +2,17 @@ import * as actionTypes from '../../actions/actionTypes';
 import { createReducer } from '../../../utils/reducers';
 
 const initialState = {
-    isSearching: false,
     searchValue: '',
     isAdvanced: false,
     titleSearch: '',
     contentSearch: '',
     tagsSearch: [],
+    noticePreviewId: null,
 };
 
 const search = (state, { payload: { searchValue }}) => {
     return {
         ...state,
-        isSearching: !!searchValue,
         searchValue: searchValue ? searchValue.toLowerCase() : '',
     };
 };
@@ -53,6 +52,14 @@ const advancedSearchTags = (state, { payload: { tags }}) => {
     };
 };
 
+const noticePreviewInit = (state, { payload: { noticeId }}) => {
+    const noticePreviewId = noticeId ? +noticeId : null;
+    return {
+        ...state,
+        noticePreviewId: noticePreviewId,
+    };
+};
+
 const reducer = createReducer(initialState, {
     [actionTypes.SEARCH]: search,
     [actionTypes.SWITCH_TO_ADVANCED_SEARCH]: switchToAdvancedSearch,
@@ -60,6 +67,7 @@ const reducer = createReducer(initialState, {
     [actionTypes.ADVANCED_SEARCH_TITLE]: advancedSearchTitle,
     [actionTypes.ADVANCED_SEARCH_CONTENT]: advancedSearchContent,
     [actionTypes.ADVANCED_SEARCH_TAGS]: advancedSearchTags,
+    [actionTypes.NOTICE_PREVIEW_INIT]: noticePreviewInit,
 });
 
 export default reducer;

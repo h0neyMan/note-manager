@@ -8,7 +8,7 @@ import directoriesManagerReducer from './reducers/DirectoriesManager';
 import updateNoticeReducer from './reducers/UpdateNotice';
 import noticeListReducer from './reducers/NoticeList';
 import searchReducer from './reducers/search';
-import { watchDirectories, watchNotices } from './sagas';
+import { watchDirectories, watchNotices, watchSearch } from './sagas';
 
 const composeEnhancers =
     process.env.NODE_ENV === 'development'
@@ -34,5 +34,6 @@ const store = createStore(
 
 sagaMiddleware.run(watchDirectories);
 sagaMiddleware.run(watchNotices);
+sagaMiddleware.run(watchSearch);
 
 export default store;

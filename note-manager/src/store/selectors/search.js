@@ -1,11 +1,12 @@
 import { createSelector } from 'reselect';
-import { getAllNotices } from './notices';
+import { getAllNotices, getById, emptyNotice } from './notices';
 
 const getSearchValue = state => state.search.searchValue;
 export const getIsAdvanced = state => state.search.isAdvanced;
 const getTitleSearch = state => state.search.titleSearch;
 const getContentSearch = state => state.search.contentSearch;
 const getTagsSearch = state => state.search.tagsSearch;
+const getNoticePreviewId = state => state.search.noticePreviewId;
 const optionSelector = value => value ? ({ label: value, value: value }) : null;
 
 export const getNoticeTitleOptions = createSelector(
@@ -47,4 +48,10 @@ export const getCurrentContentSearchOption = createSelector(getContentSearch, op
 export const getCurrentTagsSearchOptions = createSelector(
     getTagsSearch,
     (tagsSearch) => tagsSearch.length > 0 ? tagsSearch.map(optionSelector) : null,
+);
+
+export const getPreviewedNoticed = createSelector(
+    getById,
+    getNoticePreviewId,
+    (byId, noticePreviewId) => noticePreviewId && byId[noticePreviewId] ? byId[noticePreviewId] : emptyNotice,
 );
