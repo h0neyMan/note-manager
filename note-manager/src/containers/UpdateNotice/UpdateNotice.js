@@ -7,7 +7,7 @@ import { createNotice, directoriesRedirect, updateNoticeInit, updateNotice } fro
 import { getSelectedDir } from '../../store/selectors/directories';
 import { getEditingNotice, getEditingNoticeDir } from '../../store/selectors/notices';
 import { getAvailableTagOptions } from '../../store/selectors/tags';
-import { directoryShape, historyShape, getMatchShape, noticeShape, tagArray } from '../PropTypes';
+import { directoryShape, historyShape, getMatchShape, noticeShape, optionsArray } from '../PropTypes';
 import ManagerActionButton from '../../components/ManagerActionButton/ManagerActionButton';
 import EditNoticeForm from './EditNoticeForm/EditNoticeForm';
 import classes from './UpdateNotice.module.css';
@@ -74,7 +74,7 @@ CreateNotice.propTypes = {
     history: historyShape.isRequired,
     isEdit: PropTypes.bool.isRequired,
     match: getMatchShape('noticeId').isRequired,
-    tagOptions: tagArray.isRequired,
+    tagOptions: optionsArray.isRequired,
     createNotice: PropTypes.func.isRequired,
     directoriesRedirect: PropTypes.func.isRequired,
     updateNoticeInit: PropTypes.func.isRequired,

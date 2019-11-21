@@ -1,20 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
+import Creatable from 'react-select/creatable';
 
-const Multiselect = props => {
+const CreatableMultiselect = props => {
+    const newOptionDataHandler = (value, label) => {
+        return {
+            label: label,
+            value: String.prototype.toLocaleLowerCase.call(value),
+            isNew: true,
+        };
+    };
+
     return (
-        <Select
+        <Creatable
             className={props.className}
             onChange={props.handleChange}
             value={props.values}
+            getNewOptionData={newOptionDataHandler}
             options={props.options}
             placeholder={props.placeholder}
+            formatCreateLabel={value => `Create tag '${value}'`}
             isMulti />
     );
 };
 
-Multiselect.propTypes = {
+CreatableMultiselect.propTypes = {
     className: PropTypes.string,
     values: PropTypes.array,
     handleChange: PropTypes.func,
@@ -25,4 +35,4 @@ Multiselect.propTypes = {
     placeholder: PropTypes.string,
 };
 
-export default Multiselect;
+export default CreatableMultiselect;

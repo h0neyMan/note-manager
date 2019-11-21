@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getNotices, getIsDeleting, getDeletingNotice } from '../../store/selectors/notices';
+import { getNoticesByDirectory, getIsDeleting, getDeletingNotice } from '../../store/selectors/notices';
 import { getSelectedDir } from '../../store/selectors/directories';
 import FancyButton from '../../components/UI/FancyButton/FancyButton';
 import DeleteConfirmModal from '../../components/DeleteConfirmModal/DeleteConfirmModal';
@@ -69,7 +69,7 @@ NoticesManager.propTypes = {
 
 const mapStateToProps = state => {
     return {
-        notices: getNotices(state),
+        notices: getNoticesByDirectory(state),
         selectedDir: getSelectedDir(state),
         isDeleting: getIsDeleting(state),
         deletingNotice: getDeletingNotice(state),

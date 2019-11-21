@@ -54,3 +54,12 @@ export {
     deleteNoticeFail,
     deleteNoticeSuccess,
 } from './notices';
+
+export {
+    search,
+    switchToAdvancedSearch,
+    switchToSimpleSearch,
+    advancedSearchTitle,
+    advancedSearchContent,
+    advancedSearchTags,
+} from './search';

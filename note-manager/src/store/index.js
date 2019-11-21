@@ -7,6 +7,7 @@ import tagsReducer from './reducers/tags';
 import directoriesManagerReducer from './reducers/DirectoriesManager';
 import updateNoticeReducer from './reducers/UpdateNotice';
 import noticeListReducer from './reducers/NoticeList';
+import searchReducer from './reducers/search';
 import { watchDirectories, watchNotices } from './sagas';
 
 const composeEnhancers =
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     directoriesManager: directoriesManagerReducer,
     updateNotice: updateNoticeReducer,
     noticeList: noticeListReducer,
+    search: searchReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

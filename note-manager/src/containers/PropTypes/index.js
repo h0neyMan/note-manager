@@ -23,7 +23,9 @@ export const getMatchShape = (paramName) => PropTypes.shape({
     }).isRequired,
 });
 
-export const tagArray = PropTypes.arrayOf(PropTypes.shape({
+export const option = PropTypes.shape({
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-}));
+});
+
+export const optionsArray = PropTypes.arrayOf(option);

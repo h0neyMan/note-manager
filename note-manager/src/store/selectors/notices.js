@@ -8,17 +8,11 @@ const getSelectedNoteId = state => state.updateNotice.selectedNoteId;
 export const getIsDeleting = state => state.noticeList.isDeleting;
 const getDeletingNoticeId = state => state.noticeList.deletingNoticeId;
 
-export const getNotices = createSelector(
+export const getNoticesByDirectory = createSelector(
     getById,
     getAllIds,
     getSelectedDirId,
     (byId, allIds, selectedDirId) => allIds.map(id => byId[id]).filter(notice => notice.directoryId === selectedDirId),
-);
-
-export const getAllNotices = createSelector(
-    getById,
-    getAllIds,
-    (byId, allIds) => allIds.map(id => byId[id]),
 );
 
 export const getEditingNotice = createSelector(
@@ -41,4 +35,11 @@ export const getDeletingNotice = createSelector(
     getById,
     getDeletingNoticeId,
     (byId, deletingNoticeId) => deletingNoticeId && byId[deletingNoticeId] ? byId[deletingNoticeId] : emptyNotice,
+);
+
+
+export const getAllNotices = createSelector(
+    getById,
+    getAllIds,
+    (byId, allIds) => allIds.map(id => byId[id]),
 );
